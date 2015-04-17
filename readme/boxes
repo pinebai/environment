@@ -1,0 +1,35 @@
+
+25.6Mpc Box
+12Mpc Box
+
+
+25.6Mpc Box
+
+https://logrus.uchicago.edu/group/index.php/Chicago_MI_Simulation_List#Simulations
+
+nick also has some analysis on runs here:
+/lustre/gnedin/GF25/RUN.1
+
+
+
+
+
+
+12Mpc Box
+
+/home/feldmann/RAMSES_IC_12MpcBox
+1) Run Ramses from 12mpc box and compare hydro results?
+--cooling curves, star formation prescriptions
+here is the e-mail. I produced zoom-in ICs for several different galaxies, but I recommend to use the following files
+
+*gf12A_mr2N9Rvir5* or
+*gf12A_mr3N9Rvir5* .
+
+Both correspond to the same z=0 MW halo, and only differ in the DM maximum refinement (2 additional levels vs 3 additional levels). I have been running gf12A_mr2N9Rvir5 with ART, so if you use these file it will allow for a fair comparison.
+
+To run with RAMSES just include something like  
+initfile(1)='path-to-IC/ic_n2_gf12A_mr3N9Rvir5_lev0'
+initfile(2)='path-to-IC/ic_n2_gf12A_mr3N9Rvir5_lev1'
+initfile(3)='path-to-IC/ic_n2_gf12A_mr3N9Rvir5_lev2'
+initfile(4)='path-to-IC/ic_n2_gf12A_mr3N9Rvir5_lev3'
+in the .nml file

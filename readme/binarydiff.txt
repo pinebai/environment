@@ -1,0 +1,27 @@
+The traditional way to do this is with “cmp --verbose” (equivalently, “cmp -l”). Add the “--print-bytes” (or “-b”) flag to render the differing bytes in a readable format (in a addition to the decimal values and byte numbers provided by the “--verbose” flag). Since your files are so large, you’ll probably want to tee the output into a file so you can watch it go and still have the results to analyse at your leisure. For example, I’ll compare two similar MP3 files:
+
+$ cmp --verbose --print-bytes a.mp3 b.mp3 | tee differences
+   16315 302 M-B  115 M
+   16316 233 M-^[ 144 d
+   16317 110 H    224 M-^T
+. . . .
+
+21601545 377 M-^? 300 M-@
+21601546 203 M-^C   0 ^@
+21601547 300 M-@    0 ^@
+(Quote your file names appropriately, of course; cmp understands the “--” flag if you need it. You can type “cmp -lb” instead of using the long arguments.) Use wc to see how many bytes differ:
+
+$ wc --lines differences 
+66115 differences
+$ wc --bytes a.mp3 b.mp3
+21602502 a.mp3
+21602502 b.mp3
+43205004 total
+cmp only compares files byte-by-byte (it can’t resync if bytes are inserted or deleted), but that seems to be exactly what you need. It can handle arbitrarily large files (and needs no more memory than for small files). It’s found by default on Mac OS X, the various BSDs and Unices, and GNU/Linux—i.e., every widely-used modern O.S. except Windows. (Consider a minimal Cygwin install or equivalent if this really is a constraint.)
+
+
+=======================================
+
+
+xdelta delta file1 file2 patchname
+xdelta info patchname

@@ -1,0 +1,4 @@
+
+char*80 ctmp ; call getarg(1,ctmp) ; read(ctmp,*)x
+char*256 ch ; call Getarg(1,ch) ; read(ch,'(I256)')i ; write(*,*)i
+`

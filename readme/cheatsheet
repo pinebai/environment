@@ -1,0 +1,97 @@
+Commands
+* 'ALT+.' or '<ESC> .' cycle through past arguments
+* binary diff: xdelta delta file1 file2 file3difference
+
+* search for filename in directory= find [directory] -name '*[filepart]*'
+* search for filepart  in files above ./ = find ./ -name "*" |egrep -in "filepart"
+* search for word in files with *.ext = egrep -in 'word' `find ./ -name '*.ext'`
+* locate "[filepart]"'*'
+* egrep -in "[word]" *[fnpart]
+
+* sort -ng -k[column#] filename
+* tail -n +[x] [filename] = print line #x and below
+
+* sed -n "$LineNumber p" /path/to/file1 = output line number
+* redo in VI: ctrl-r
+
+* command | tee outputfile = output goes to both stdout and outputfile
+* <see kml for bash scripts involving math (bc -l) and string manipulation (also see allspec.cray in fulla:ic-all/spectra)>
+
+* perl -pi -e 's/search/replace/g' fileisaltered
+
+* #chars in string ${#string}
+* cut strings: x = 123456 ; ${x:2:${#x}-1-2}=345
+* x=123456 -> beg=2; echo ${x:$beg:${#x}-1-$beg} =>345 ::: cut string into pieces
+
+* rename 12345 12abc45 *12345*
+* awk '{print $NF}' print last column
+
+* for i in `seq 1 10` ; do x=$i; echo $x; done
+* i=0; while [ $i -lt 10 ]; do echo $i; let i = i+1; done
+* i=0; while [ $i -lt 10 ]; do echo $i; counter = $(($counter+1)); done
+
+
+* jobname=`echo $jobpath | sed 's|/| |g' | awk '{print($NF)}'`
+* ext=`echo $jobname | sed 's|\.| |g' | awk '{print($NF)}'`
+* jobid=`echo $jobname | sed 's|\.$ext||g'`
+* echo "go?(y/n)" ; read ok ; if [ "$ok" != "y" ]; then exit; fi
+* grep -o 'rs[0-9]\{1,2\}' <---search for prefix rs with either 1 or 2 numbers after it
+
+* if [ $# -ne 1 ]; then ; exit; fi //// if [ $? -ne 0 ]; then ; exit; fi
+* if [ "1" != "2" ] && [ "2" != "1"]; then echo "smart"; fi
+* if ... [ -z string ]; then :: zero string length; -n :: nonzero;  :: -f file exists; $# :: # of args; $? :: arguments
+* for i in `seq 1 10`; do blah; done
+
+* gthumb shortcut (b) = prev, (n) = next
+
+-------------
+View any already in progress copy command in detail
+
+sudo lsof -p1234 | grep -E "(3r|4w).*REG"
+If you spot a dubious looking cp command running you can use this command to view what is being copied and to where.
+1234 is the PID of the cp command being passed to the lsof utility.
+3r.*REG will display the file/directory that is being read/copied.
+4w.*REG will display the destination it is being written to.
+
+------------
+Save a file you edited in vim without the needed permissions
+:w !sudo tee %
+
+I often forget to sudo before editing a file I don't have write permissions on. When you come to save that file and get the infamous "E212: Can't open file for writing", just issue that vim command in order to save the file without the need to save it to a temp file and then copy it back again.
+
+-----------
+cp filename{,.bak}
+quickly backup or copy a file with bash
+
+-----------
+invoke an editor while writing in bash
+ctrl-x e
+
+The shell will take what you've written on the command line thus far and paste it into the editor specified by $EDITOR. 
+---------
+cntl-r reverse search history
+
+scripts
+*include in script = >. file (.[space]file)
+$# = number of args ; $? = all args
+[ -z "$s" ] = true if s is zero length; [ -n "$s" ]  = true if s is nonzero length; [ -f "$s" ]  = true if file exists;
+
+
+Academic Sheet----------------------
+km/s~Kpc/Gyr
+pc=3*10^18cm
+Msun=2*10^33 grams
+Lsun=4*10^33 ergs/s
+''/rad=206265 year=3.14*10^7
+Mearth=
+rhocr=1.4*10^11*Msun/Mpc^3 ~ 10^-30 grams/cm^3
+(Del_k)^2=(k/(2pi))^3*P(k)  [not sure about 2pi]
+
+Caroll (see LSS/hk1/ or jet:ic/)
+OmM03 := 0.3`
+OmL03 := 0.7`
+HoH03[a_] := OmM03/a^3 + OmL03 + (1 - OmM03 - OmL03)/a^2
+OmM3[a_] := OmM03/(a^3 HoH03[a])
+OmL3[a_] := OmL03/HoH03[a]
+growth3[a_] := (a 5 OmM3[a])/( 2 (OmM3[a]^(4/7) - OmL3[a] + (1 + OmM3[a]/2) (1 + OmL3[a]/70)))
+

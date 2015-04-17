@@ -1,0 +1,121 @@
+﻿================
+C Notes
+
+
+C to convert character to integer:
+* j=atoi(character)
+* auniarg = atof( argv[arg] );
+
+
+String manipulation: 
+* strcpy( input_filename, argv[1] );
+* cart_debug("input filename:  %s ",input_filename);
+
+
+modify input name for output, and check modification worked:
+* output_filename = replace(input_filename,"fidl0-rs8","fidmodeff-rs8");
+* if( strcmp(output_filename, input_filename) == 0 ){
+
+
+combine string variables:
+* sprintf( filename,  "%s/%s_a%6.4f.dph", output_directory, jobname,auniarg );
+
+
+
+
+
+
+
+
+subroutines
+subroutines
+for external variables in C:
+http://en.wikipedia.org/wiki/External_variable
+http://www-ee.eng.hawaii.edu/~tep/EE160/Book/chap14/subsection2.1.1.3.html
+https://www.doc.ic.ac.uk/lab/secondyear/cshort/docs/node17.html 
+
+
+You declare the variable outside of a function/routine in whatever file.
+Then assign it once in one routine (without redecaring it as int or whatever)
+if you want to use it in another file you declare it at the beginning of
+the other file with the extern tag
+
+
+For an example see Doug's CART analysis code on fulla, where you inserted your own structures before the stuff that totals xray flux
+and also in the routine that *writes the flux
+
+
+e.g.
+io.h included in all files...
+io.h: extern int num_stars_total
+
+
+io.c: int num_stars_total; (outside of routine)
+io.c: subroutine that assigns num_stars_total=10
+
+
+analysis.c: int num_stars_total; (outside of routine)
+analysis.c: subroutine that uses num_stars_total
+
+
+
+
+see jet:ic/inputcosmo.c, makefile and growth to show how to insert subroutines into a file efficiently.
+
+
+for how to call subroutines without ugly pointer junk see leda:class/stats/monte_carlo_cdf.c
+but basically just call:
+main {
+subrout1( x[] );
+}
+void subrout1( double x[] ){
+x[1]=2;
+}
+
+
+
+
+
+
+----------------
+C fopen check if file there
+If all you want to do is check for and screw around with .bashrc, just try to
+open the file for append (or write, depending on whether or not you want to
+overwrite it.) If the call to fopen didnt return null, the file is there; if it
+did return null, the file isnt there or you dont have permission to write to it...
+for example:
+
+
+FILE* bashrc;
+bashrc = fopen(".bashrc", "w+"); /*open the file for writing*/
+if (bashrc == NULL)
+printf("Couldnt open file");
+else
+{
+... /*do stuff here*/
+}
+----------
+        Check whether 2 numbers are equal to machine precision
+
+
+
+
+// Usable AlmostEqual function
+bool AlmostEqual2sComplement(float A, float B, int maxUlps)
+{
+    // Make sure maxUlps is non-negative and small enough that the
+    // default NAN won't compare as equal to anything.
+    assert(maxUlps > 0 && maxUlps < 4 * 1024 * 1024);
+    int aInt = *(int*)&A;
+    // Make aInt lexicographically ordered as a twos-complement int
+    if (aInt < 0)
+        aInt = 0x80000000 - aInt;
+    // Make bInt lexicographically ordered as a twos-complement int
+    int bInt = *(int*)&B;
+    if (bInt < 0)
+        bInt = 0x80000000 - bInt;
+    int intDiff = abs(aInt - bInt);
+    if (intDiff <= maxUlps)
+        return true;
+    return false;
+}

@@ -1,0 +1,7 @@
+nick segfaults segmentation faults
+
+You need to find first where the segfaults occurs. 
+
+If add #define DEBUG in defs.h, it will create debug.###.log files for you and will write every timer on/off switch. 
+That way you can find between which two timer calls the code segfaults. 
+To do finer level debugging, you can insert SET_MARKER(int) calls in your code, they will leave a record in debug.###.log as well.

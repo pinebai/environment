@@ -1,0 +1,7 @@
+To run CAMB:
+see jet:cosmosims/CAMB/
+params.ini contains all parameters you need including sigma8 and omegas... prefix for files is set and matter power spectrum is output.
+>camb params.ini
+if you modify the cosmology and need a specific sigma8,  run the code, go back inside and modify scalar_amp(1)  by multiplying 
+scalar_amp(1)  =  scalar_amp(1)  *(desired_sigma/output_sigma)^2 
+units are P(k)=h-3Mpc^3 with k=h/Mpc

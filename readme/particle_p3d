@@ -1,0 +1,181 @@
+
+
+     subroutine OnScreen ( X , Y , Z , psu , sX , sY )    (p3d.f)
+c     -------------------------------------------------                                                                                                                       
+c                                                                                                                                                                             
+c     From 3D coordinates of a point calculates a 2D screen  coordinates                                                                                                       
+c                                                                                                                                                                             
+c     input  : X , Y , Z  - 3D coordinates of a point                                                                                                                         
+c                           ( in the range [-0.5+Xb,0.5+Xb] by                                                                                                                
+c                             convention, where Xb is a coordinate                                                                                                            
+c                             of the box center )                                                                                                                             
+c              psu(1)  = Xb    ! x-coordinate (3D) of the box center                                                                                                          
+c              psu(2)  = Yb    ! y-coordinate (3D) of the box center                                                                                                          
+c              psu(3)  = Zb    ! z-coordinate (3D) of the box center                                                                                                          
+c              psu(4)  = Scale ! scale of the plot for zoom in/out                                                                                                            
+c              psu(5)  = CTH   ! cosine of the viewing angle Theta                                                                                                            
+c              psu(6)  = STH   ! sine -"-              
+c              psu(7)  = CPH   ! cosine of the viewing angle
+c              psu(8)  = SPH   ! sin
+c              psu(9)  = Xlook ! x-coordinate (3D) of the viewing
+c              psu(10) = Ylook ! y-coordinate (3D) of the viewing
+c              psu(11) = Zlook ! z-coordinate (3D) of the viewing
+c     output : sX , sY - 2D screen coordinates    
+
+
+
+  SUBROUTINE PALETT ( TYPE , CONTRA , BRIGHT )  (p3d.f)
+!Set color table
+       IF (TYPE.EQ.1) THEN
+C        -- gray scale                                                                                                                                                        
+         CALL PGCTAB(GL, GR, GG, GB, 2, CONTRA, BRIGHT)
+      ELSE IF (TYPE.EQ.2) THEN
+C        -- rainbow                                                                                                                                                           
+         CALL PGCTAB(RL, RR, RG, RB, 9, CONTRA, BRIGHT)
+      ELSE IF (TYPE.EQ.3) THEN
+C        -- heat                                                                                                                                                              
+         CALL PGCTAB(HL, HR, HG, HB, 5, CONTRA, BRIGHT)
+      ELSE IF (TYPE.EQ.4) THEN
+C        -- freeze                                                                                                                                                            
+         CALL PGCTAB(CL, CR, CG, CB, 5, CONTRA, BRIGHT)
+      ELSE IF (TYPE.EQ.5) THEN
+C        -- AIPS                                                                                                                                                              
+         CALL PGCTAB(AL, AR, AG, AB, 20, CONTRA, BRIGHT)
+      END IF
+
+http://staff.not.iac.es/~jht/pgplot.html#PGCTAB
+Use the given color table to change the color representations of
+all color indexes marked for use by PGIMAG. To change which
+color indexes are thus marked, call PGSCIR before calling PGCTAB
+or PGIMAG. 
+
+ CONTRA (input)  : The contrast of the color ramp (normally 1.0).
+                   Negative values reverse the direction of the ramp.
+ BRIGHT (input)  : The brightness of the color ramp. This is normally
+                   0.5, but can sensibly hold any value between 0.0
+                   and 1.0. Values at or beyond the latter two
+                   extremes, saturate the color ramp with the colors
+                   of the respective end of the color table.
+
+
+http://staff.not.iac.es/~jht/pgplot.html#PGSCR
+      SUBROUTINE PGSCR (CI, CR, CG, CB)
+      INTEGER CI
+      REAL    CR, CG, CB
+
+Set color representation: i.e., define the color to be
+associated with a color index.  Ignored for devices which do nota
+support variable color or intensity.  Color indices 0-15
+have predefined color representations (see the PGPLOT manual), but
+these may be changed with PGSCR.  Color indices 16-maximum have no
+predefined representations: if these indices are used, PGSCR must
+be called to define the representation. On monochrome output
+devices (e.g. VT125 terminals with monochrome monitors), the
+monochrome intensity is computed from the specified Red, Green, Blue
+intensities as 0.30*R + 0.59*G + 0.11*B, as in US color television
+systems, NTSC encoding.  Note that most devices do not have an
+infinite range of colors or monochrome intensities available;
+the nearest available color is used.  Examples: for black,
+set CR=CG=CB=0.0; for white, set CR=CG=CB=1.0; for medium gray,
+set CR=CG=CB=0.5; for medium yellow, set CR=CG=0.5, CB=0.0.
+
+Argument:
+ CI     (input)  : the color index to be defined, in the range 0-max.
+                   If the color index greater than the device
+                   maximum is specified, the call is ignored. Color
+                   index 0 applies to the background color.
+ CR     (input)  : red, green, and blue intensities,
+ CG     (input)    in range 0.0 to 1.0.
+ CB     (input)
+
+http://staff.not.iac.es/~jht/pgplot.html#PGSCI
+      SUBROUTINE PGSCI (CI)
+      INTEGER  CI
+
+Set the Color Index for subsequent plotting, if the output device
+permits this. The default color index is 1, usually white on a black
+background for video displays or black on a white background for
+printer plots. The color index is an integer in the range 0 to a
+device-dependent maximum. Color index 0 corresponds to the background
+color; lines may be "erased" by overwriting them with color index 0
+(if the device permits this).
+
+If the requested color index is not available on the selected device,
+color index 1 will be substituted.
+
+The assignment of colors to color indices can be changed with
+subroutine PGSCR (set color representation).  Color indices 0-15
+have predefined color representations (see the PGPLOT manual), but
+these may be changed with PGSCR.  Color indices above 15  have no
+predefined representations: if these indices are used, PGSCR must
+be called to define the representation.
+
+Argument:
+ CI     (input)  : the color index to be used for subsequent plotting
+                   on the current device (in range 0-max). If the
+                   index exceeds the device-dependent maximum, the
+                   default color index (1) is used.
+
+
+http://staff.not.iac.es/~jht/pgplot.html#PGSCIR
+      SUBROUTINE PGSCR (CI, CR, CG, CB)
+      INTEGER CI
+      REAL    CR, CG, CB
+
+Set color representation: i.e., define the color to be
+associated with a color index.  Ignored for devices which do not
+support variable color or intensity.  Color indices 0-15
+have predefined color representations (see the PGPLOT manual), but
+these may be changed with PGSCR.  Color indices 16-maximum have no
+predefined representations: if these indices are used, PGSCR must
+be called to define the representation. On monochrome output
+devices (e.g. VT125 terminals with monochrome monitors), the
+monochrome intensity is computed from the specified Red, Green, Blue
+intensities as 0.30*R + 0.59*G + 0.11*B, as in US color television
+systems, NTSC encoding.  Note that most devices do not have an
+infinite range of colors or monochrome intensities available;
+the nearest available color is used.  Examples: for black,
+set CR=CG=CB=0.0; for white, set CR=CG=CB=1.0; for medium gray,
+set CR=CG=CB=0.5; for medium yellow, set CR=CG=0.5, CB=0.0.
+
+Argument:
+ CI     (input)  : the color index to be defined, in the range 0-max.
+                   If the color index greater than the device
+                   maximum is specified, the call is ignored. Color
+                   index 0 applies to the background color.
+ CR     (input)  : red, green, and blue intensities,
+ CG     (input)    in range 0.0 to 1.0.
+ CB     (input)
+
+http://staff.not.iac.es/~jht/pgplot.html#PGSCLP
+      SUBROUTINE PGSCLP(STATE)
+      INTEGER STATE
+
+Normally all PGPLOT primitives except text are ``clipped'' at the
+edge of the viewport: parts of the primitives that lie outside
+the viewport are not drawn. If clipping is disabled by calling this
+routine, primitives are visible wherever they lie on the view
+surface. The default (clipping enabled) is appropriate for almost
+all applications.
+
+Argument:
+ STATE  (input)  : 0 to disable clipping, or 1 to enable clipping.
+
+http://staff.not.iac.es/~jht/pgplot.html#PGSITF
+      SUBROUTINE PGSITF (ITF)
+      INTEGER  ITF
+
+Set the Image Transfer Function for subsequent images drawn by
+PGIMAG, PGGRAY, or PGWEDG. The Image Transfer Function is used
+to map array values into the available range of color indices
+specified with routine PGSCIR or (for PGGRAY on some devices)
+into dot density.
+
+Argument:
+ ITF    (input)  : type of transfer function:
+                     ITF = 0 : linear
+                     ITF = 1 : logarithmic
+                     ITF = 2 : square-root
+
+
+

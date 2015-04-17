@@ -1,0 +1,51 @@
+
+implicit function declarations are not reported by warnings for intel. Remarks must be printed
+ -Wall -Wextra -Wremarks -Werror-all
+http://stackoverflow.com/questions/9182763/implicit-function-declarations-in-c
+
+
+
+see stats/montecarlo on leda for good subroutine example: 
+main{double *x; malloc(x...); 
+sub(x,...);}; 
+void sub(double x[],...){x[1]=2;}
+if( !(fp = fopen(filename,"r")) ) die("couldn't open filename") ;
+
+==============================
+Pointers to functions
+C++ allows operations with pointers to functions. The typical use of this is for passing a function as an argument to another function, since these cannot be passed dereferenced. In order to declare a pointer to a function we have to declare it like the prototype of the function except that the name of the function is enclosed between parentheses () and an asterisk (*) is inserted before the name:
+====================
+
+// pointer to functions
+#include <iostream>
+using namespace std;
+
+int addition (int a, int b)
+{ return (a+b); }
+
+int subtraction (int a, int b)
+{ return (a-b); }
+
+int operation (int x, int y, int (*functocall)(int,int))
+{
+  int g;
+  g = (*functocall)(x,y);
+  return (g);
+}
+
+int main ()
+{
+  int m,n;
+  int (*minus)(int,int) = subtraction;
+
+  m = operation (7, 5, addition);
+  n = operation (20, m, minus);
+  cout <<n;
+  return 0;
+}
+
+====================
+In the example, minus is a pointer to a function that has two parameters of type int. It is immediately assigned to point to the function subtraction, all in a single line: 
+
+ 
+int (* minus)(int,int) = subtraction;

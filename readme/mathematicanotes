@@ -1,0 +1,9 @@
+mathematica
+
+Assumptions is used to set constants greater than zero
+
+to unset a variable look in help under unset : x=.
+The unary or monadic operator & gives the ``address of a variable''.
+
+The indirection or dereference operator * gives the ``contents of an object pointed
+to by a pointer''.

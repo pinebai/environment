@@ -1,0 +1,9 @@
+# javascript gives you a facebook button
+http://samleitner.com/friendyourvote/fbooklogin.html
+
+# django gives you a framework, authentication, and database management 
+http://django-facebook.readthedocs.org/en/latest/installation.html
+https://github.com/pythonforfacebook/facebook-sdk
+
+# facebook docs on the login stuff and the app itself
+https://developers.facebook.com/docs/facebook-login/login-flow-for-web/v2.2

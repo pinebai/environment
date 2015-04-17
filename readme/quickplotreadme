@@ -1,0 +1,1 @@
+Ar=2*3.14*40/1000/1000; plot [0:3][-5:1]'< paste out_sizmbhloz-refSNthRT-rs9/age_sizmbhloz-refSNthRT-rs9_a0.9041.dat out_sizmbhloz-refSNthRT-rs9/radial_sizmbhloz-refSNthRT-rs9_a0.9041.dat ' u ( log10($10/(Ar*$1*1e6)) ):( log10($3/1e7/(Ar*$1)) )

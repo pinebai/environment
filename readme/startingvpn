@@ -1,0 +1,6 @@
+Applications->system tools->oracle
+should be logged in as root (uses same password as for asdf)
+vpnc should default to 
+alias vpnc='/usr/local/opt/cisco/anyconnect/bin/vpn connect vpn1.its.yale.edu'
+then login with 
+snl23 // paper flagration

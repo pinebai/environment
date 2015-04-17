@@ -1,0 +1,21 @@
+Formatting
+Plot parts of data within a file
+plot "test.dat" index 0, "test.dat" index 1 #compare block 0 with 1
+plot "test.dat" index 0:1 #plot blocks 0 and 1
+splot '0495' ev ::14::2000, '0495' ev ::1000::3000  #plot different lines in a file
+
+Controlling Line type and Point type 
+To set the line color to $i:
+plot x lt $i
+
+to set a line style with a given point type (and possibly a specific dot/dashedness in ps) and color.
+set line style 1 lt 4 pt 7 lw 1 ps 2    #(line type, point type, line width, point size)
+plot x ls 1
+
+Setting key position: set key bottom/top/ right/left/
+set minor grid in x: set grid mx
+
+
+Line Formatting
+To make lines not connect in sections of data, put two blank lines between the each line segment.
+

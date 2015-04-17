@@ -1,0 +1,8 @@
+[@Sams-MacBook-Pro-2 ~/repos/grackle/src/example]$  cat out.compile
+g++  -install_name /lib/libgrackle.dylib -g -o example.exe example.o       -L/Users/sleitner/hdf5-1.8.11//lib -lhdf5 -L/lib -lgfortran   -L/Users/sleitner/local/lib -lgrackle
+i686-apple-darwin11-llvm-g++-4.2: -install_name only allowed with -dynamiclib
+
+had to delete flags from variable
+MACH_LDFLAGS  =
+in
+../clib/Make.mach.darwin

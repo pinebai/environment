@@ -1,0 +1,18 @@
+Precision
+BYTE: 8-bit unsigned [0 => 255b]
+INTEGER: 16-bit signed [-32,768 => +32,767] (FIX)
+LONG: 32-bit signed [-2,147,483,648l => +2,147,483,647l]
+LONG64: 64-bit signed [-9,223,372,036,854,775,808ll => +9,223,372,036,854,775,807ll]
+FLOAT: 32-bit single precision [+/-10^(38), 6 or 7 significant figures]
+DOUBLE: 64-bit double precision [+/-10^(308)d, 14 or 15 significant figs]
+COMPLEX: real/imaginary pair of floats
+DOUBLE COMPLEX: real/imaginary pair of doubles (DCOMPLEX)
+UINT: 16-bit unsigned [0 => 65,535u]
+ULONG: 32-bit unsigned [0 => 4,294,967,295ul]
+ULONG64: 64-bit unsigned [0 => 18,446,744,073,709,551,615ull]
+
+
+-------------------------
+to determine number of digits of accuracy (floating point float, double precision)
+use gcc machine_epsilon.c ; ./a.out in cool/
+

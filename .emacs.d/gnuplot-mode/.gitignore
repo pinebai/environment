@@ -1,0 +1,8 @@
+*.elc
+*.log
+*.aux
+*.pdf
+*.dvi
+*~
+#*#
+/hacks.el

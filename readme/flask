@@ -1,0 +1,9 @@
+debug generally: 
+import pdb; pdb.set_trace()
+
+OR in run.py make debug=True
+#!/usr/bin/env python
+from app import app
+app.run(debug=True)
+
+see instructions on the failing webpage that pops up 

@@ -1,0 +1,304 @@
+see data_science_interview for interview-related stuff
+===================================
+# SQL 
+syntax: (http://www.sqlcourse2.com/intro2.html)
+SELECT [t1Label.dataColumn,...] [some-sort-of-math/ABS/SIGN/MOD/FLOOR/CEILING/ROUND/SQRT(dataColumns)] [aggregators (SUM, MAX, MODE, MEDIAN)] 
+FROM firstTable AS t1Label
+[JOIN secondTable ON t1Label.Xid=secondTable.Xid]
+WHERE col ><=/AND/OR/IN(list of values)/NOT IN/BETWEEN value1 AND value2/NOT BETWEEN/ 
+[GROUP BY t1Label.column_name]
+[HAVING condition-on-the-aggregator]: 
+[ORDER BY col1, col2, DESC/ASC]
+
+## NESTING
+SELECT FROM construct can be used to create a new data frame that can be then SELECT-FROMed
+## GROUP BY 
+    Gives the aggregator a group to be associated with. 
+    If there is an aggregator then every
+## Having 
+   provides a condition on the aggregator for print
+## Joins:
+OUTER = join tables on every key, and insert NULL values where the keys don't exist in the other table
+OUTER LEFT = join on every left key and insert NULL values where keys don't exist in the right table
+OUTER RIGHT = above but other order
+INNER = join tables on every key and only display table where 
+
+===================================
+# Data Munging and python
+## pandas!
+import pandas as pd 
+Series is a 1D object (s)
+s.unstack(['column']) moves one of the keys into columns to create a 2D data-frame
+# f1=train.ix[25:35,'f_1'] # this is a series that contains the nan
+df['column'].values
+df.column.value_counts()
+df.drop(['col'])
+
+## scikit-learn
+
+## timing commands 
+import timeit
+t=timeit.Timer() 
+t.timeit(idf.ix['Travis'].prop)
+OR in ipython just do the following including the %: 
+> %timeit 
+
+
+===================================
+# Maching Learnging 
+
+## Supervised Learning  
+key concepts: training set, test/validation set, regularization
+
+### regularization 
+Is added to cost function for each parameter to minimize overfitting. 
+
+which kind to choose?http://stats.stackexchange.com/questions/866/when-should-i-use-lasso-vs-ridge
+some math? http://statweb.stanford.edu/~owen/courses/305/Rudyregularization.pdf
+
+* LASSO -- L1norm
+Drives all parameters toward zero. If there are correlated values usually one is selected and the others are set to 0.
+
+
+* Tikhonov regularization/Ridge regression -- L2norm 
+drives the intensity of parameters down
+
+* ElasticNet -- combines the two http://www.math.mtu.edu/~shuzhang/MA5761/model_selection2.pdf
+
+
+*training set* is used to fit parameters; 
+
+*validation set* is used to look for overfitting: adding parameters/reducing regularization will reduce error on training set forever, but after regularization becomes too weak, overfitting makes the model less accurate on the validation set. 
+
+For multiple classes for classification: do one vs all, 1 run of each classification for each of k  classes
+
+### Descision Tree
+Data science ML course
+
+Expected Entropy = SUM( p_i*log_2(p_i), i) 
+
+expected values us p_i. logarithmic because sum of information from p1+p2 = information in state p1*p2 -> log(p1)+log(p2)=log(p1*p2) ; base 2 makes coin flip= one bit
+
+choose to split where you end up with lower entropy... if you can make a split so you end up with a coin flip, that is better than splitting and ending up with a dice role.
+ 
+
+
+####Bootstrapping: 
+A draw N samples from N points with replacement.
+
+e.g. want 90% confidence interval for fit? take region within 90% of fits.
+
+*Bagging*
+
+*Boosted Decision Tree*
+
+*Random Forest*
+draw k bootstrap sample, 
+
+train decision tree. 
+
+* choose next leaf node, select m attribute at random from p available
+* choose the best split using entropy
+
+evaluate error using "out-of-bag" (undrawn points from bootstrap) as test-set
+
+make prediction using votes form the trees
+
+### Logistic Regression
+categorize points in multi-dimensional space
+
+take training set, provide logistic function: h(x)=1/(1+exp(-\vec{theta}*\vec{x})) P(x)
+
+when h(x)>0.5 then y=1, h(x)<0.5 then  y=0; 
+
+that transition happens when \vec{theta}*\vec{x}=0 (decision boundary).
+
+To identify the decision boundary, set the equation equal to the shape you want. For a line in 2D 0=theta0*constant+theta1*x1+theta2*x2; for a circle theta0*constant+theta3*x1**2+theta4*x2**2
+
+*cost function (J)* 
+
+J(theta) = sum_i(cost_i)
+
+cost_i=y*log(h(x)) + (1-y)*log(1-h(x))
+
+### Support Vector Machines
+* Large margin classifier: cost function maximizes the space between categories.
+
+cost changed to be linear down to +-1 and then 0; 
+* if y=0: then cost function=0 if \vec{theta}\vec{x}<-1 cost0
+* if y=1: then cost function=0 if \vec{theta}\vec{x} >1 cost1
+cost = (1-y)*cost0 + y*cost1 + \vec{theta}**2
+
+projection of x onto theta = \vec{theta}\vec{x}= (norm*projection)=||theta||**2*Projection
+* (\vec{theta} is perpendicular to the decision boundary)
+* we want that to be greater than 1.
+* but norm of theta is being minimized, so the cost1/2 functions force the projection to be maximized, which results in the largest possible distance between the boundary and the points
+ 
+*Gaussian Kernels* 
+
+ put Gaussian feature centers at all of the training examples (points).
+
+ regularization trades off number of features, sigma controls variance/bias.
+
+
+
+## Unsupervised Learning
+### K-means ###
+* (NP-complete problem)
+* identify number of desired clusters.
+
+## Neural Networks
+
+# Time Complexity
+* P: polynomial order
+* NP: non-deterministic polynomial order : with a normal turing machine exponential time, but with a branching computer maybe polynomial time. Approximate polynomial time evaluations may exist. Some proofs can be completed in polynomial time given the answer
+* NP-complete: If a deterministic polynomial time algorithm can be found to solve one of them, every NP problem is solvable in polynomial time. (every NP problem can be reduced to an NP-complete problem?)
+* NP-hard: NP-complete problems are reducible to NP-hard problems in polynomial time... if there is a solution to an NP-hard problem in NP=P
+
+===================================
+# Algorithms
+
+* Insertion Sort: O(n^2)
+* Move cards to the left until they're smallest.
+* Merge Sort: O(n*log(n))
+* divide and then 
+
+* Heap (min/max): 
+* Hash: constant time element access
+* Dijkstra's: 
+* Tree search:
+
+## Graph Search Algorithms
+### Breadth First Search (BFS) O(v+e)
+level by level
+
+#### Method
+use a queue
+(v,w) = list of vertices w connected to v by an edge
+q.push(v)
+visited(all) = False
+while q != None:
+    v = q.pop()
+    if not visited(v):
+        visited(v) = True
+        for edge in (v,w):
+            q.push(w)
+
+#### Uses
+* compute distance between points in a graph.
+* compute components in a connected graph.
+
+### Depth First Search (DFS)
+Climb down the tree all the way adding to the stack until you get to the end and then come back up popping off.
+
+#### Method
+Replace queue with a stack so you push down to all nodes before coming back to first
+v = source
+visited(all) = False
+(v,w) = list of vertices w connected to v by an edge
+S.push(v)
+while S != None:
+    v = S.pop()
+    if not visited(v):
+        visited(v) = True
+        for edge in (v,w):
+            S.push(w)
+
+OR just do it recursively?
+def DFS(v):
+    for edge in (v,w)
+        if visited(w) == False:
+            DFS(w)
+            s.add_to_stack(2)
+            visited(w) = True
+
+#### Uses
+* Mazes
+
+===================================
+# Distributed Programming
+## MapReduce paradigm:
+
+* Map: (take (key, value) -> local combiner)-> one of the reducers
+* Reduce: manupulate the transmitted (key,value) into an output (key,value)
+* error control throughout 
+
+## MPI paradigm:
+* just shared communication methods 
+* MPI_Reduce http://mpitutorial.com/mpi-reduce-and-allreduce/
+* http://mpitutorial.com/beginner-mpi-tutorial/
+
+===================================
+# Statistics
+
+## Basics
+* variance = sum_i((x_i-mu)^2)
+* std deviation = sqrt(variance)
+* std deviation on the the mean = std deviation of sample / sqrt(n)
+
+
+## Distributions: 
+**Poisson** used for random events occuring with some rate (radioactive decay etc); 
+After lambda expected events, lambda=E(X)=Var(X).
+* the probability of a different number of events k is P(k)=lambda**k exp(-lambda)/k!
+
+**Binomial** used for events with binary outcomes of some probabilitiy p, discretely sampled
+
+
+sampling:
+
+
+
+## Bayesian reasoning
+### Basics
+P(A and B) = P(B and A); 
+P(A and B) = P(A|B)*P(B) = P(B|A)*P(B) = P(B and A)
+P(A|B) = P(B|A)*P(A)/P(B)
+P(B) = SUM_i P(B|X_i)*P(X_i) or P(B)=P(B|A)*P(A)+P(B|!A)*P(!A) 
+
+### Interpretation
+probability of reality given data; 
+P(D) is a prior distribution; that is updated by the observation P(D|R)
+P(R|D) is the Posterior
+
+### Example
+
+Probability of truly having HIV | positive test = P(HIV|+) = P(+|HIV)*P(HIV)/P(+)
+P(+) = P(+|HIV) + P(+|not HIV) (probability of true and false positive)
+
+### Related concepts
+
+* Sensitivity/"power"/"recall"/PPV: probability of a positive test given the patient is sick OR fraction of relevant instances that are retrieved. 
+** true positive rate = # HIV+positive/# of sick individuals= # true positives / # true positive + # false negatives =tp/(tp+fn)
+* Precision: fraction of retrieved instances that are relevant. = tp/(tp+fp)
+* Accuracy: tp+tn/(tp+tn+fp+fn)
+* Specificity: probability of a negative test given the patient is well
+** true negative rate = # HIV+negative/ (correctly negative / ( false positives+true negative))    --true negative = correctly identified negative
+* F-score: combines precision and recall: F1=2*precision*recall/(precision+recall)
+
+* type I error
+* type II error
+
+## multicoliniarity (http://en.wikipedia.org/wiki/Multicollinearity)
+2 or more predictor variables are correlated so that the coefficients of the predictors fluctuate as more data is added (noise might separate the variables if they are almost identical).
+--insignificant variable with multilinear regression, but significantwith linear regression
+
+EFFECT: increases parameter error and can lead to acceptance of null hypothesis
+
+SOLUTION: omit variable; obtain more data
+-------------
+## Missing data imputation
+* Sort a dataset in any number of variables, find the missing value immediately adjacent and continue.
+* Predict missing value with regression+add stochastic value to regression using variance of regression.
+* MI
+* MLE
+
+============================
+# nbviewer: a fast way to render ipython notebooks!
+upload to github with (sudo pip install jist)
+jist [nb.ipynb]
+(or you could create your own repo)
+
+create a notebook instance by inserting the returned URL at 
+http://nbviewer.ipython.org/
+

@@ -1,0 +1,20 @@
+
+http://fulla.fnal.gov/transfer.html
+
+# SSH to the command line interface
+[cc3 ~]$ gsissh <username>@cli.globusonline.org
+
+# Activate the fulla#cc3 Endpoint
+$ endpoint-activate -g fulla#cc3
+
+
+----------
+on fulla: 
+#On cc3.fulla.fnal.gov
+# If you are using the KCA certificate you will need to do the following:
+kinit -r 7d sleitner@FNAL.GOV
+kx509
+# SSH to the command line interface
+gsissh cli.globusonline.org
+# Activate the fulla#cc3 Endpoint
+endpoint-activate -g fulla#cc3

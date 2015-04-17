@@ -1,0 +1,14 @@
+
+jobname="pbstips"
+    cat <<EOF >tmp.pbs           
+#PBS -S /bin/bash               
+#PBS -l nodes=1:ppn=1,walltime=1:00:00,vmem=30400mb 
+#PBS -q large                             
+#PBS -j oe  
+#PBS -N ind.d:$jobname
+
+./executable  args
+if [ $? -ne 0 ]; then echo 'exec  failed'; exit; fi 
+EOF                                                  
+    qsub tmp.pbs -o temp/pbs-cig -d `pwd`
+    if [ $? -ne 0 ]; then echo "pbs failed "; exit; fi

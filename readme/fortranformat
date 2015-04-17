@@ -1,0 +1,3 @@
+write(*,'(''scaling 0-level grid from NGRIDC='', i4,
+&           '' to ng='', i4,'' using grid_corr='',f7.3') NGRIDC, ng, grid_corr
+Aw string; Iw integer; Fw.d Real; Ew.d exponential

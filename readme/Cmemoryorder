@@ -1,0 +1,3 @@
+123
+456
+if stored in linear memory with row-major order would look like the following: 123456   -- access outside element first Aij : i=row=major,j=column=minor

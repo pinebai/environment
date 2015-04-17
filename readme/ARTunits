@@ -1,0 +1,23 @@
+
+float convert_temp_to_ie(float temp,int cell){
+    return temp/units->temperature*cell_gas_density(cell)/
+        ((cell_gas_gamma(cell)-1)*constants->wmu);
+}
+float convert_n_to_density(float n){
+    return n/constants->cc/units->number_density;
+}
+
+
+
+
+-------RT-------
+ngxi = dn/dnu * nu = number density of photons/Hz *nu
+
+I think these functions actually output: 
+{ F(particle_t+particle_dt-star_birth_t(ipart)) - F(particle_-star_birth_t(ipart)) } / particle_dt
+then to convert to erg/s from rad_luminosity_hart you would do:
+rad_luminosity_hart(ipart)/units->time * particle_mass[ipart]*units->mass *constants->c*constants->c . 
+
+
+HART input luminosities are Lbol*f<912 
+where f<912 is L(lambda<912)/Lbol and was fit to match fig 117 from starburst99 for the ratio of the ionizing (\912 A ) over the bolometric luminosity 

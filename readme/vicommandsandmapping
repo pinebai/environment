@@ -1,0 +1,18 @@
+vi commands
+
+every vi mapping ever http://cross-lfs.org/~arowland/docs/vimtips.pdf
+
+find (search) replace:
+http://sunsite.uakom.sk/sunworldonline/swol-10-1997/swol-10-unix101.html
+
+The following command will search for "up" and replace it with "right."
+
+:s/up/right/
+
+
+:map! ^? ^H Make delete act like backspace
+:map! ^[OA ^[ka xterm arrow sequences will
+:map! ^[OB ^[ja exit edit-mode, move the
+:map! ^[OC ^[la cursor, and re-enter edit-mode.
+:map! ^[OD ^[ha
+--------------------------------------------------

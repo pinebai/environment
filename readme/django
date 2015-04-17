@@ -1,0 +1,200 @@
+http://django-eztables.readthedocs.org/en/latest/templatetags.html
+--------------------
+
+debugging tool bar for request response: pip install django-debug-toolbar
+http://django-debug-toolbar.readthedocs.org/en/1.2.2/installation.html
+follow the "Quick Setup" instructions and you'll be on your way
+
+--------------------
+authentication! facebook twitter google
+http://www.artandlogic.com/blog/2014/04/tutorial-adding-facebooktwittergoogle-authentication-to-a-django-application/
+but you also need to set
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, "templates/"),
+)
+which places home.html and base.html in source/thirdauth/templates/thirdauth/  
+and you need to add the Google+ API to the list of enabled APIs
+http://stackoverflow.com/questions/24377506/httperror-403-forbidden-with-django-and-python-social-auth-connecting-to-googl
+in the **Google Developers Console** under APIs & auth -> APIs
+ 
+
+
+--------------- server/aws to laptop:
+to transfer between the server and back the laptop version is the same except:
+(1) you need to mkvirtualenv at source/../ (preferably named "virtualenv") and then activate
+(2) pip install -r requirements.txt
+(3) modify superlists/settings.py to accept local domain access
+(4) change static directories to be relative
+
+----------------bugs
+Anytime you change models.py you will have to do 
+python3 manage.py makemigrations
+python3 manage.py migrate
+but you may also just have to rm -f the migrations folder
+also watch out for differences between your local and remote mysql server tables
+
+------------------------
+to add webpage:
+modify lists/views.py to include render
+modify superlists/urls.py
+sgu restarts the server 
+-----------
+go here and follow instructions to install virtualenv and django for a given environment
+http://hackercodex.com/guide/python-install-django-on-mac-osx-lion-10.7/
+>mkvirtualenv foobar
+>workon foobar
+>deactivate #to exit venv
+-----------
+Accessing multiple databases through Django -- see fyv/lists/queryvoter
+# just access connection to multiple databases:
+# https://docs.djangoproject.com/en/1.7/topics/db/multi-db/
+# build an ORM around this db:
+# https://docs.djangoproject.com/en/1.7/howto/legacy-databases/
+http://stackoverflow.com/questions/26831238/using-django-to-query-a-mysql-database-using-the-same-connection-as-the-orm-data
+
+#to see all queries through the given connection:
+> print(connections['votersdb'].queries)
+
+----------
+https://docs.djangoproject.com/en/1.7/intro/tutorial01/#the-development-server
+workon foobar
+>python manage.py startapp XXX 
+------------
+django-admin.py startproject superlists
+
+
+------------
+....
+python manage.py shell #mess with python objects stored in dictionary
+from polls.models import Question, Choice
+Question.objects.all()
+----------
+https://pypi.python.org/pypi/django-debug-toolbar#downloads
+http://www.pythondiary.com/templates/bootstrap
+
+------------
+REST  
+client
+web service server: Data, functionality -- accessed using URIs by all clients
+client sends request
+response from server = representation of a resource HTML/XML; is self-descriptive; uniform interface; http is a stateless communication protocol; every request is a new request; can perform http operations GET/POST/PUT/DELETE
+
+SOAP:
+
+=========================
+Django:
+
+### start a project
+> django-admin.py startproject XXX
+
+### start server and test the django served result
+cd XXX
+> python3 manage.py runserver
+
+# functional_tests.py
+from selenium import webdriver 
+browser = webdriver.Firefox() 
+browser.get('http:// localhost:8000') 
+assert 'Django' in browser.title
+
+> python3 functional_tests.py
+
+### Now make functional_tests.py more useful:
+### write a human readable story to go with the tests 
+### Use the unittest module!
+
+inherit from unittest.TestCase 
+setup and tearDown are automatically run methods
+self.assertIn : unittest provides helper function like ... see unittest docs.
+self.fail : produces the given error no matter what 
+self.browser.implicitly_wait in setup because of Selenium testing
+unittest.main() automatically finds test classes and methods in the file and runs them
+
+-----------
+> python3 functional_tests.py
+functional_tests drive testing at a high level,
+unit tests (in lists/tests.py) check out individual small features
+-----------
+http comes for particular URL, 
+Django uses a rule to decide which view function to use
+view  returns an http response
+* resolve the URL from the root to the view?
+* make the view return some HTML that the functional test ultimately passes
+-----------
+lists.views tells you where to find various urls
+each method in views can return a website
+but create a templates/ folder to keep the html in
+----------
+Django needs to be told in settings.py that the new app is used
+--------------
+for debugging the functional_test do:
+#       import time
+#       time.sleep(10)
+----------
+debug generally: import pdb; pdb.set_trace()
+-----------
+need to place a token into forms to identify POST requests as having come from the right place.
+-----------
+> python3 manage.py makemigrations
+add new fields 
+> python3 manage.py migrate
+apply all migrations 
+
+===================
+python3+mysql+tdd book
+django-admin.py startproject XXX
+
+------- virtualenv and intallation with python3
+virtualenv --python=python3 ../virtualenv 
+source ../virtualenv/bin/activate
+
+pip install -r requirements.txt # this installs requirements list
+pip freeze > requirements.txt # this creates requirements list for future virtualenv
+
+------ conecting to mysql:
+# https://www.pythonanywhere.com/wiki/UsingMySQL
+# try local first
+> mysqld
+
+in project/project/settings.py
+DATABASES = {
+    'default': {
+        #'ENGINE': 'django.db.backends.mysql', #change this after installing connector
+        'ENGINE': 'mysql.connector.django',
+        'NAME': '<your_username>$<your_database_name>',
+        'USER': '<your_username>',
+        'PASSWORD': '<your_mysql_password>',
+        'HOST': '', #blank is the localhost
+    }
+}
+
+> pip3.3 install --user https://dev.mysql.com/get/Downloads/Connector-Python/mysql-connector-python-2.0.1.tar.gz
+>pip install --allow-all-external mysql-connector-python
+
+
+# to check the server status you can also connect directly with:
+mysql djangotest --user=root -h'127.0.0.1'
+mysql djangotest --user=username -h'127.0.0.1' -p
+but make sure that there are no wildcard localhost usernames because they will be found first and their permissions are probably bad
+
+NOTE: mysql does NOT allow unique to apply to text fields of arbitrary length. This means that the TDD book's search for duplicates had to be commented 
+https://code.djangoproject.com/ticket/2495
+
+-----------
+(1) searching the database for the thing you want!
+(2) serving the database from your website
+exact queries to select from table
+https://docs.djangoproject.com/en/dev/topics/db/queries/
+Entry.objects.get(headline__exact="Man bites dog")
+
+----------------
+using hostgator with django
+http://stackoverflow.com/questions/20831432/why-is-django-using-fcgi-on-a-hostgator-server-behaving-this-way
+
+make sure that you are using the right version of django when you start an app (activate the right version)
+http://stackoverflow.com/questions/20906305/import-error-cannot-import-name-execute-manager-in-windows-environment
+
+setup fastcgi
+http://redconservatory.com/blog/getting-django-up-and-running-with-hostgator-part-2-enable-fastcgi/
+But this is wrong:
+http://support.hostgator.com/articles/django-with-fastcgi

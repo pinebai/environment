@@ -1,0 +1,26 @@
+
+Output Formats
+
+
+png (try again sometime -- convert *.ps *.png seems to work well)
+set term png large color picsize 1024 1024
+set output 'file.png'
+set view 0,0
+replot
+unset output
+set term x11
+Postscript (works well, but leaves space)
+set term postscript color enhanced "Helvetica" portrait
+set output 'file.ps'
+set view 0,0
+replot
+unset output
+set term x11
+
+eps (try again sometime -- seems to work well for the above 2-panel 2d plot)
+set term postscript eps enhanced color
+set output 'file.eps'
+set view 0,0
+replot
+unset output
+set term x11

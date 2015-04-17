@@ -1,0 +1,35 @@
+redirect a website to an AWS IP address using an A-record slot
+https://www.namecheap.com/support/knowledgebase/article.aspx/434/78/how-do-i-set-up-host-records-for-a-domain
+Amazon web service is serving an EC2 instance with ip 54.186.146.209
+
+
+
+------------
+http://www.shivarweb.com/website-setup/
+http://www.shivarweb.com/1819/how-to-use-the-wordpress-dashboard-initial-settings/
+
+# You purhcased the Domain Name from namecheap.com
+
+# But the webhosting (access and space) is actually provided by hostgator:
+https://portal.hostgator.com/ 
+http://samleitner.com/wp-admin/
+911126281119
+
+You can login to our billing system at http://gbclient.hostgator.com/login, using the email address we sent this email to, and the password 97kKuPq6b6GC
+    Shared Plan:        Hatchling
+    Your Control Panel: https://gator4172.hostgator.com:2083
+    Username:           sleitner
+    Domain:             samleitner.com
+    Password:           T+p9wmse1Iwm
+    1st Nameserver:     ns8343.hostgator.com
+    2nd Nameserver:     ns8344.hostgator.com
+    Server IP:          108.167.133.28
+
+
+# Free webhosting of static sites can be free from github pages
+
+# You use Wordpress themes and widgets 
+
+http://codex.wordpress.org/WordPress_Quick_Start_Guide
+
+

@@ -1,0 +1,141 @@
+========== topics 
+
+========== migrating 
+# How to dump a local table from database 'voter_history; table 'newyork' and send to AWS rds server '''
+mysqldump -u root -p  --tab=./ voter_history newyork
+scp -i ~/pem/keypair.pem newyork.sql newyork.txt  ubuntu@54.186.146.209:migrate/
+aws
+cd migrate
+#create the database
+mysqladmin -h samdb.cv0zrh9zkypd.us-west-2.rds.amazonaws.com -P 3306 -u sleitner -p create voter_history
+#create the table
+mysql --local -h samdb.cv0zrh9zkypd.us-west-2.rds.amazonaws.com -P 3306 -u sleitner -p voter_history < newyork1.sql
+# This failed because of permissions/priveleges originally, but the local flag made it work
+mysqlimport --local -h samdb.cv0zrh9zkypd.us-west-2.rds.amazonaws.com -P 3306 -u sleitner -p voter_history newyork1.txt 
+
+# Then you want to add indexing if you haven't already!
+
+#  this is an alternative equivalent
+mysql> load data infile local 'newyork.txt' into table voter_history.newyork
+rds
+mysql> show tables IN voter_history;
+'''
+http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Procedural.Importing.NonRDSRepl.html
+---------
+PERMISSIONS stuff (permissions)
+priveleges are not granted to the master user automatically 
+FILE priveleges in particular are missing so mysqlimport wont work
+http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html
+but you can use 
+LOAD DATA LOCAL INFILE
+http://stackoverflow.com/questions/1641160/how-to-load-data-infile-on-amazon-rds
+OR: 
+in workbench go to database > Migration Wizard and follow instructions there but this is very slow. 
+--------------------------------
+http://stackoverflow.com/questions/16285864/how-can-i-correct-mysql-load-error
+
+
+========== table manipulation command line
+add row/value:
+INSERT INTO testdb.another_table ('bday') VALUES(12251983)
+alter column value:
+UPDATE testdb.another_table SET bday = 12251982 WHERE bday>12251984;
+----- workbench 
+to add a row:
+http://dev.mysql.com/doc/workbench/en/wb-getting-started-tutorial-adding-data.html
+right click table, select rows, 
+then change the results by hand and click apply
+
+
+
+========== Bugs
+was getting a disappearing MySQL server thing
+fixed by adding /etc/my.cnf that contains:
+[mysqld]
+max_allowed_packet = 16M
+
+also for Error Code: 2013. Lost connection to MySQL server during query
+http://stackoverflow.com/questions/10563619/error-code-2013-lost-connection-to-mysql-server-during-query
+
+
+========== MySQL AWS
+http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToInstance.html
+use AWS console
+mysql -h samdb.cv0zrh9zkypd.us-west-2.rds.amazonaws.com -P 3306 -u sleitner -p
+
+========== MySQL local and workbench
+local hosting:
+mysqld starts a server at the default IP/port: 127.0.0.1 / 3306
+click the + button and check that test connection works 
+double click on the db in the home screen
+
+to kill mysql see .bashrc alias killmysql
+
+========== SQL scripting
+# to manipulate tables from python use sqlalchemy (NOT deprecated MySQLdb):
+import pandas as pd 
+from sqlalchemy import create_engine
+
+conn_str = "mysql+mysqldb://root:@127.0.0.1/voter_history?charset=utf8&use_unicode=0"
+engine = create_engine(conn_str)
+conn = engine.connect()
+#conn.execute("INSERT INTO voter_history.ohio1 (id, person) \
+#    VALUES ('16', 'ad');")
+result = conn.execute("select * from ohio1")
+print result.fetchall()
+conn.close()
+
+FOR MORE OF THAT SEE job/voter_histories/sql_csv_to_table.ipynb
+
+mysqlimport  --ignore-lines=1 --fields-terminated-by=,
+--columns='ID,Name,Phone,Address' --local -u root -p
+Database /path/to/csvfile/TableName.csv
+
+
+========== SQL scripting
+# SQL script that generates table column headings automatically
+tname ="blah"
+sfp = open("sql_table", "w")
+fp = open("SWVF_1_44.TXT", "r")
+cols = fp.readline()
+fp.close()
+cols = cols.split(",")
+sfp.write("CREATE TABLE " + tname + " (id INT)\n")
+for i in cols:
+    sfp.write("ALTER TABLE " + tname + " ADD COLUMN " + i + " VARCHAR(256)\n")
+sfp.close()
+
+grab all of the columns
+head -1  SWVF_1_44.TXT| perl -pe 's/,/\n/g' |grep GEN |perl -pe 's/\n/\`, /g' |perl -pe 's/G/\`G/g'
+
+========== HOSTGATOR
+download oracle's MySQL
+for connection:
+* Hostname is IP Address from  samleitner.com/cpanel/
+* your computers IP address must be accepted in the cpanel under Remote MySQL:
+http://www.hostgator.com/ip  
+* username and password are established in the cpanel interface
+* permissions also set in cpanel
+ 
+
+Account Information
+Package Hatchling
+IP Address  108.167.140.97
+Server Name gator4172
+Name Servers
+ns8343.hostgator.com
+ns8344.hostgator.com
+Home Directory  /home3/sleitner
+Operating System    Linux CentOS
+Server Time Oct 09 15:20 CDT
+Server Status   Click to View
+Program Paths   Click to View
+Program Versions    Click to View
+Resource Alerts 0 Alerts
+
+resources
+http://www.go4expert.com/articles/sql-server-oracle-mysql-basic-questions-t11568/
+Other people say the host should be localhost:
+http://forums.hostgator.com/my-mysql-server-t63768.html
+
+

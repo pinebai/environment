@@ -1,0 +1,14 @@
+http://django-eztables.readthedocs.org/en/latest/templatetags.html
+
+
+debugging:
+//      alert('toggle: '+toggleswitch+' '
+//            + inactive_charter+' '
+//            + inactive_public+' '
+//            + inactive_elementary +' '
+//            + inactive_middle+ ' '
+//            + inactive_high);
+
+buttons:
+$('button[name="schoolinfo"].active')
+        .filter('[id="charter"]').val()=="charter" ? 0 : 1 ;

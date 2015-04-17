@@ -1,0 +1,26 @@
+# virtualenvwrapper
+mkvirtualenv env1
+workon env1
+
+# virtualenv + pip:
+sudo easy_install pip
+sudo easy_install virtualenv
+* pip is purely for installing python packages; it is superior to easy_install 
+* create virtualenvs to support multiple python / dependency versions
+
+* note that your current virtualenv was installed with python 3(?) so:
+    * virtualenv -p python3 env
+* to make your virtualenv the default: source env/bin/activate
+* record requirements for a given installation
+    * pip freeze > requirements
+    * later if needed pip install -r requirements.txt
+* to run ipython and ipython notebook, ipython needs to be installed explicitly and then for nb so do a few support modules:
+    * pyzmq and tornado (pip3 install ...)
+Now>> cd insight; source env/bin/activate
+
+
+
+to create a new virtualenv in folder ENV just type
+$ virtualenv ENV
+and then to activate it 
+$ source ENV/bin/activate

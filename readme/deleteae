@@ -1,0 +1,2 @@
+
+for dir in */; do cd $dir/out/ ; for ae in `/bin/ls |grep -o a[0].[0-1,8,5,4][0-9][0-9][0-9]  |uniq |grep -v a0.10` ; do echo $ae ; rm -f *_${ae}.*; done; cd ~/scratch-midway/run1/ ; done

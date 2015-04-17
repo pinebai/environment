@@ -1,0 +1,1 @@
+sigma=0.69; mc=0.08;plot 'imf.chab03_1.dat' u 1:3, '/lustre/sleitner/imf_chab01.dat' u 1:2, x<1 ? exp(-(log10(x)-log10(mc))**2/(2*sigma*sigma))/x : exp(-(log10(1.0)-log10(mc))**2/(2*sigma*sigma))/1.0*(x/1.0)**-2.35 w l, 'imf.kroupa01_2.dat' u 1:3 w l

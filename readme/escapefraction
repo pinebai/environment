@@ -1,0 +1,16 @@
+======================================================
+
+CODE STRUCTURE for escape fraction
+[analysis. : calc_fesc] 
+-> [Afesc.c : AextEscapeFraction]
+print and pick halos of interest; reduce and print averages
+->[Afesc.c : AfeSumOverCells] - >AfeAddOneLocation
+->AfeAddOneLocation 
+RT ->cdTraverseSky
+noRT inplace ->losTraverseSky with a provided worker function 
+integrated_pix_lum[ipix] = lum*absorption
+Fe (.num, .var_ids)  given by struct AfeInfo Afe_912A declaration in Afesc.c
+Afe_912A_abs_ is the "absorption" function used to combine in var_ids in Afesc.c
+
+
+

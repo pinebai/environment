@@ -1,0 +1,19 @@
+﻿Correlation Functions (wp, xi)
+Correlation function code can be found on jet at millenium/wpgood/ for projected and on mandor at uvb/correl/ for 3d... (and projected) 
+
+
+The linklist construction is informative... the loop is:
+
+
+lattice=linklist=-1
+for(ip=0;ip<np;ip++){
+        xc=x[ip];
+        yc=y[ip];
+        zc=z[ip];
+        linklist[ip]=lattice[d3(xc,yc,zc)];
+        lattice[d3(xc,yc,zc)]=ip;
+}
+The last particle inserted into LL is put into the lattice and linklist[lattice[d3(xc,yc,zc)]] calls the start of that linklist. so lattice is like the header for the linklist. Previous particle id's are pointed to by linklist until linklist[ip]=lattice[]=-1 when you get to the first particle that was inserted into the cell.
+... maybe this is inefficient because points in the same cell have wildly varying ip's....
+ 
+the mandor folder also has a cray that tells you how to make inputs for the millenium/wpgood folder's code and the mandor code.

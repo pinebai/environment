@@ -1,0 +1,83 @@
+UNIX unix Unix
+
+to get a nice ps image output a png and then convert to ps
+
+1 page pdf to 2 page ps.
+open in adobe reader
+file, print, to file, options: all except save printer memory, LEVEL 3
+mpage -4aR  > foursheetsperpage.ps
+DONT WORRY THAT THE ORIGINAL PS IS CRAP!!!!!!!
+
+egrep -in "read" *.cpp // find string in a list of files grep
+
+find . -name '*'"$l"'*' -print
+locate
+sort -n +column#
+sort -g -k1 -k2 -k3 back/unsorthcgrid >hcgrid
+using columns 1,2,3 where g sorts with the whole number (e+4 etc included)
+
+du gives space taken by folder
+df -k gives disk space available
+df -u
+
+ps -u sleitner shows my processes
+ps -ef shows everyones
+
+echo $shell tells the shell... bash tcsh etc
+bashrc, cshrc, tcshrc store variables
+source re-reads bashrc
+nohup = logoff does not close program
+
+bc =command line calculator
+nice= priority
+wc = wordcount
+du -k= amount of memory in all lower folders
+
+convert ps to jpeg
+ps2epsi file.ps file.epsi
+convert file.epsi file.jpeg
+
+to get attachments from pine first ssh in then save the attachment then sftp into
+pine and get the attachment.
+
+
+latex ps eps
+Using ps2epsi
+
+The command ps2epsi can be used to convert a ps file to an eps file, e.g. give a
+file called picture.ps it can be converted to an eps file with
+
+ps2epsi picture.ps picture.epsi
+
+This also adds to the file a bitmap preview image which is not really necessary.
+You can thus remove it with the command
+
+perl -ne 'print unless /^%%BeginPreview/../^%%EndPreview/' < picture.epsi >
+picture.eps
+
+Using Graphics packages
+The convert tool from the ImageMagick package can convert between many different
+image formats. To convert ps to eps try
+
+convert file.ps file.eps
+
+Alternatively use the display tool to display the image and then left click the
+image to bring up a menu. From the menu you can crop the image and then save it as
+an eps file.
+
+diff -yW 180 Work.F zcolplne.F
+
+linking:
+ln -d /dir/* ./ =hard link
+ln -s /dir/* ./ =symbolic link
+
+
+---------------------------------------------------
+split the output from a program into a file and stdout.
+echo "message...." | tee -a myfile.out
+message....
+[sleitner@fulla HF6657]$ ls myfile.out
+myfile.out
+[sleitner@fulla HF6657]$ more myfile.out
+message....
+

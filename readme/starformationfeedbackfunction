@@ -1,0 +1,14 @@
+//////////////                                                                                                                             
+typedef void(*mlimf)();
+void massloss_IMF_Salpeter();
+void massloss_IMF_MillerScalo();
+void massloss_IMF_Chabrier();
+void massloss_IMF_Kroupa();
+struct MLfromIMF
+{
+  char* name;
+  mlimf  f;
+}
+const massloss_IMF_fun[] = { { "Salpeter", massloss_IMF_Salpeter }, { "Miller-Scalo", massloss_IMF_MillerScalo }, { "Chabrier", massloss_I\
+MF_Chabrier }, { "Kroupa", massloss_IMF_Kroupa } };
+////////////////// 

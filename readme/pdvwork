@@ -1,0 +1,14 @@
+simulate nonthermal pressure
+-- no cooling field that contributes to the energy
+------does *decay* on the turbulence dissipation timescale tau_dissipate~???
+-- d ei_nt = -PdV ; P=ei_nt*(gamma'-1) 
+------ d ei_nt/dV = -ei_nt*(gamma'-1)*dV 
+dei = dQ-dW=-pdV+TdS 
+dS=0
+dei = -pdV
+change in internal energy comes entirely from work done by the gas
+if change in internal energy occurs because of anything else the internal energy MUST be compensated:
+dei = -pgasdV -pcrdV 
+pcr*dV is already subtracted from the internal energy above... put it back into the temperature here.
+
+

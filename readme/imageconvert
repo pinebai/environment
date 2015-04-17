@@ -1,0 +1,2 @@
+High quality image conversion
+convert -density 2000 -geometry 50% Wacc.4-dlos-a.25-ipix01.ps image.gif

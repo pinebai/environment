@@ -1,0 +1,20 @@
+http://www.nickpolet.com/blog/deploying-django-on-aws/1/
+
+free tier: 
+http://aws.amazon.com/rds/free/
+you had to expand the memory availability
+
+----------
+Billing
+https://console.aws.amazon.com/billing/home#/bill?year=2014&month=11
+
+Q: Why am I getting a bill? I thought my new account was covered by the AWS Free Usage Tier offer.
+
+The AWS Free Usage Tier applies only to a limited set of AWS resources. For more information about what free tier covers, see the AWS Free Usage Tier details page. Here are a few tips for troubleshooting unexpected charges:
+
+Linux distribution – Make sure you use a free tier eligible distribution of Linux. Some commercial distributions of Linux and AWS Marketplace AMIs are not covered by the free tier.
+SOLUTION: Terminate the instance and launch a new one using the Amazon Linux AMI.
+Instance size – Only t2.micro and t1.micro instance usage is covered by the free tier. Other instance sizes will accrue charges until you terminate them.
+SOLUTION: Terminate your existing instance and launch a new t2.micro or t1.micro instance.
+EBS storage – Check the amount of storage you've provisioned in Amazon Elastic Block Store (Amazon EBS) volumes. If the total amount of provisioned storage in your volumes exceeds 30 GB, you will accrue charges for the additional storage.
+SOLUTION: Delete unused Amazon EBS volumes.

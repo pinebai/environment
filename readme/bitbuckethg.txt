@@ -1,0 +1,13 @@
+
+reverting or updating to earlier versions:
+
+http://stackoverflow.com/questions/2540454/mercurial-revert-back-to-old-version-and-continue-from-there
+
+http://tortoisehg.bitbucket.org/hgbook/1.6/finding-and-fixing-mistakes.html#id373530
+
+
+go to someone's branch. 
+clone the repository
+hg pull
+hg update -r <changeset>
+python setup.py develop

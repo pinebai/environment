@@ -1,0 +1,15 @@
+http://docs.python.org/2/library/profile.html
+I've been using cProfile.run("SlicePlot")
+then pstats to examine the tree
+
+import pdb
+pdb.set_trace()
+http://pythontutor.com/
+
+ipython notebook
+tab completion
+dir(obj) for methods and attributes
+help(obj) for docstring and location
+pkg? for explanation of package
+pkg?? for explanation plus code
+

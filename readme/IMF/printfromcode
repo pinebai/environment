@@ -1,0 +1,9 @@
+starformation_feedback.c in "diagnostic only"
+        FILE *fp;
+        fp=fopen(IMF_fun[imf.type].name,"w");
+        for(i=0; i<1000;i++){
+            fprintf(fp,"%f %e %e %e\n",i/10.0,f_IMF(i/10.),ml.loss_rate, ml.time_interval);
+        }
+        fclose(fp);
+        exit(1);
+

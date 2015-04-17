@@ -1,0 +1,27 @@
+
+------------
+execute echoed command once at time (like cron but fast)
+echo "ls -l" | at midnight
+---------------
+cron jobs
+
+crontab -e edits crontab for current user... see crontab -l on fulla or on leda for example
+
+SHELL=/bin/bash
+HOME=/userhome/sleitner/
+
+# run-parts
+
+0-59/3 * * * * /userhome/sleitner/cronscript3
+0-59   * * * * /userhome/sleitner/cronscript
+
+01 * * * * root echo "This command is run at one min past every hour"
+17 8 * * * root echo "This command is run daily at 8:17 am"
+17 20 * * * root echo "This command is run daily at 8:17 pm"
+00 4 * * 0 root echo "This command is run at 4 am every Sunday"
+* 4 * * Sun root echo "So is this"
+42 4 1 * * root echo "This command is run 4:42 am every 1st of the month"
+01 * 19 07 * root echo "This command is run hourly on the 19th of July"
+
+crontab crontabfile
+crontab -l

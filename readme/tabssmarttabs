@@ -1,0 +1,4 @@
+http://www.vim.org/scripts/script.php?script_id=231
+http://www.emacswiki.org/SmartTabs
+add *.el directory to load path
+download smart-tabs-mode.el

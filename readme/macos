@@ -1,0 +1,4 @@
+spectacle 
+
+sudo port install coreutils findutils
+export PATH=$PATH:/opt/local/libexec/gnubin

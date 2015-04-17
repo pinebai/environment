@@ -1,0 +1,10 @@
+ /* scan xygrid */
+  if(!(fpxy=fopen(filename_xray,"r")))
+    cart_error("couldn't open xray emissivity table") ;
+  npxyf=0;
+  while(!feof(fpxy))
+    {
+      fgets(a,1000,fpxy);
+      npxyf++;
+    }
+  rewind(fpxy);

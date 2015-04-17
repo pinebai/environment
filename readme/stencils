@@ -1,0 +1,11 @@
+
+for children:
+    /* returns a random unit in direction of oct child*/
+    /*     children start at bottom left */
+    /* 4 5   6 7 */
+    /* 0 1   2 3   +x-> +z^ +y>> */
+
+for neighbors:
+x: -/+ = 0/1
+y: -/+ = 2/3
+z: -/+ = 4/5

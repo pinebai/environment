@@ -1,0 +1,2 @@
+convert from weird format to proper utf8
+iconv -f LATIN1 -t UTF8 AllNYSVoters.txt >ALLNYutf8.txt

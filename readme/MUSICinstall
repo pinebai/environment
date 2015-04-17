@@ -1,0 +1,1 @@
+follow the instructions for installing fftw3 and gsl, you may need to turn off the modules when making gsl and you'll want to point links to the new local directory

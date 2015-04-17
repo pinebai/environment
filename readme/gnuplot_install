@@ -1,0 +1,58 @@
+wxt terminal!
+
+-----------------------
+
+INSTALLING gnuplot:
+./configure PREFIX=/// ; make ; make install 
+then add PREFIX/bin to path
+
+
+------------------------
+------------------------
+------------------------
+------------------------
+
+http://www.miscdebris.net/blog/2010/03/03/install-gnuplot-4-4-0-rc1-on-ubuntu-linux/
+
+The most frequented blog entries here are about installing Gnuplot on Ubuntu Linux or Mac OS X. These entries are still valid for the newer Ubuntu versions. But Gnuplot newest version 4.4.0 was already released, and in this release there are cairo based pdf and png terminals provided. So you don’t need the pdflib anymore. Below you’ll find updated instructions to compile and install Gnuplot 4.4.0 with wxt and pdfcairo terminal. These instructions were tested on Ubuntu 8.04 (Hardy Heron) and Ubuntu 9.10 (Karmic Koala) and should also work on 8.10 (Intrepid Ibex) and 9.04 (Jaunty Jackalop).
+
+Prerequisites
+
+We need to make sure some packages are already installed before we try to compile gnuplot
+
+    libwxgtk2.8-dev – for the wxt terminal
+    libpango1.0-dev – for the cairo (pdf, png) and wxt terminals
+    libreadline5-dev – readline support (editing command lines)
+    libx11-dev and libxt-dev – X11 terminal
+    texinfo (optional) – needed for the tutorial
+    libgd2-xpm-dev (optional) – old png, jpeg and gif terminals based on libgd
+
+This command (run in a terminal) will install all prerequisites if not already installed:
+
+sudo apt-get install libwxgtk2.8-dev libpango1.0-dev libreadline5-dev libx11-dev libxt-dev texinfo libgd2-xpm-dev
+
+Then we download and compile gnuplot (run each command/line in a terminal)
+
+    wget http://sourceforge.net/projects/gnuplot/files/gnuplot/4.4.0/gnuplot-4.4.0.tar.gz/download
+    tar xzf gnuplot-4.4.0.tar.gz
+    mkdir build && cd build
+    ../gnuplot-4.4.0/configure --with-readline=gnu
+
+check if you find the lines in the output at the bottom:
+
+X Window System terminal: yes
+jpeg terminal: yes
+gif terminal: yes (with animated gif)
+png terminal: yes
+    (jpeg, gif and png terminals can use TTF fonts)
+wxt terminal: yes
+cairo-based pdf and png terminals: yes
+Readline library: GNU readline library with  -lncurses
+
+    make
+
+(if you have problems here with some latex errors than disable the latex tutorial during the configure stage with “--without-tutorial”, if you get a “103: makeinfo: not found” error message than install the texinfo package)
+
+    sudo make install
+
+Then you have gnuplot installed with nice readline support (command line like in bash), a nice new wxWidgets terminal and a pdf terminal based on cairo.

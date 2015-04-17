@@ -1,0 +1,36 @@
+http://hg.yt-project.org/yt/raw/yt-3.0/doc/install_script.sh
+http://hg.yt-project.org/yt/raw/yt/doc/install_script.sh
+http://hg.yt-project.org/yt/raw/stable/doc/install_script.sh
+
+maybe install scipy for access to cosmology/integration stuff
+bash install_script.sh
+source YT_DEST/bin/activate
+
+(or alias to loadyt)
+
+hg clone https://bitbucket.org/yt_analysis/yt
+cd yt
+hg update yt-3.0
+python setup.py develop
+
+loadyt 
+
+update dependencies in yt-x86_64:
+yt update --all
+
+
+add the following to the end of activate so that local python files can still be found in the yt environment.
+PYTHONPATH="$PYTHONPATH:/home/sleitner/origin/pylib/:./"
+export PYTHONPATH
+
+
+=====================
+check what fields are available:
+from yt.mods import *
+pf = load("IsolatedGalaxy/galaxy0030/galaxy0030")
+print pf.field_list
+print pf.derived_field_list
+ds = pf.all_data()
+print ds["field"]
+
+

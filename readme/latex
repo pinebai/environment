@@ -1,0 +1,3 @@
+texshop:
+change typeset to TeX and DVI in the top toolbar. 
+Click typeset for LaTeX once and then chance LaTeX to BibTeX, then recompile with latex

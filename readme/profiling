@@ -1,0 +1,7 @@
+profilers
+http://en.wikipedia.org/wiki/Profiler_%28computer_science%29
+http://www.gnu.org/software/binutils/manual/gprof-2.9.1/html_chapter/gprof_toc.html
+valgrind (with massif tool) /memcheck: http://en.wikipedia.org/wiki/Valgrind
+kegel.com
+http://kuscsik.blogspot.com/2007/08/how-to-benchmark-c-code-using-gcc.html
+

@@ -1,0 +1,65 @@
+current cell_var structure:
+#define VAR_TOTAL_MASS			0
+#define VAR_FIRST_SPECIES_MASS  	1
+#define VAR_POTENTIAL           	2
+#define VAR_POTENTIAL_HYDRO           	3
+#define VAR_ACCEL           	 	4+0,1,2
+#define num_grav_vars           	4+nDim
+
+7        #define HVAR_GAS_DENSITY			(num_grav_vars+rt_num_vars)
+8           #define HVAR_GAS_ENERGY                   	(num_grav_vars+rt_num_vars+1)
+9           #define HVAR_PRESSURE                     	(num_grav_vars+rt_num_vars+2)
+10         #define HVAR_GAMMA                        	(num_grav_vars+rt_num_vars+3)
+11         #define HVAR_INTERNAL_ENERGY              	(num_grav_vars+rt_num_vars+4)
+12,13,14  #define HVAR_MOMENTUM                     	(num_grav_vars+rt_num_vars+5)
+
+
+=====================================
+num_basic_hydro_vars  5+nDim
+num_extra_hydro_vars  1 or 0 (e- non-equil)
+		      #define HVAR_ADVECTED_VARIABLES		(num_grav_vars+rt_num_vars+num_basic_hydro_vars+num_extra_hydro_vars)
+
+
+
+#define rt_num_chem_species           				6 / 0 
+#define RT_HVAR_OFFSET                				(HVAR_ADVECTED_VARIABLES)
+
+#define cell_HI_density(c)            				(cell_vars[c][RT_HVAR_OFFSET+0])
+#define cell_HII_density(c)           				(cell_vars[c][RT_HVAR_OFFSET+1])
+#define cell_HeI_density(c)           				(cell_vars[c][RT_HVAR_OFFSET+2])
+#define cell_HeII_density(c)          				(cell_vars[c][RT_HVAR_OFFSET+3])
+#define cell_HeIII_density(c)         				(cell_vars[c][RT_HVAR_OFFSET+4])
+#define cell_H2_density(c)            				(cell_vars[c][RT_HVAR_OFFSET+5])
+
+#define HVAR_METAL_DENSITY_II         				(HVAR_ADVECTED_VARIABLES+rt_num_chem_species)
+
+#define num_hydro_vars                  			(num_basic_hydro_vars+num_extra_hydro_vars +rt_num_chem_species+num_enrichment_species+num_feedback_species)
+
+#define num_hydro_vars    (6+nDim+num_chem_species)
+
+
+
+Units
+
+Where ~ indicates the density relative to the mean matter (DM+baryon) density at z
+hvar(ivarH1,icell)=rhoH1~
+hvar(ivarH1,icell)=rhoHII~
+hvar(1,icell)=rho_baryon~ (I'm almost positive that this is rho_baryon)
+nh/nbaryon=.76
+NOTE in the papers overdensity refers to (nh-nhbar)/nhbar -- see equation 9 in http://adsabs.harvard.edu/abs/2001ApJ...559..507S
+
+
+
+old hvar indices
+
+a_tree.h:75:c hvar(1,*) - gas density
+a_tree.h:76:c hvar(2,*) - gas energy
+a_tree.h:77:c hvar(3,*) - x-momentum
+a_tree.h:78:c hvar(4,*) - y-momentum
+a_tree.h:79:c hvar(5,*) - z-momentum
+a_tree.h:80:c hvar(6,*) - pressure
+a_tree.h:81:c hvar(7,*) - Gamma
+a_tree.h:82:c hvar(8,*) - internal energy
+
+a_setup.h:47: parameter ( nchem = 2 + 8*n_rt1_on) ! # of chemical species automatic 2 are type I and type II SN rates
+a_setup.h:56: parameter ( nhvar = 8 + nchem ) ! # of all advected variables

@@ -1,0 +1,139 @@
+yt pastebin script.py
+python script.py --paste
+---------------------------------
+# language gotchas:
+mutable variables passed to a function can be modified and returned, but if a mutable variable is reassigned it 
+
+immutable variables 
+
+
+---------------------------------
+autocomplete python
+http://tkf.github.io/emacs-jedi/released/
+---------------------------------
+add a line/points to a legend without plotting them
+line = self.ax1.plot([0], [0], '-', label=r"$\dot{m}_{HI+H2}$", linewidth=2.0)
+--------------------------------
+#cycle line styles 
+
+from itertools import cycle
+
+def create_line_cycle():
+    lines=[]
+    for fmt in ["-","--","-.",":"] :
+        for i in range(7):
+            lines.append(fmt)
+    return lines
+
+class .. 
+    def __init__(self,...):
+        self.lines = create_line_cycle()
+        self.linecycler = cycle(self.lines)
+    def makelineplot:
+        if fmt == None :
+            fmt= next(self.linecycler)
+
+--------------------------------
+check all arraay elements ... don't know what np.diff does
+np.all(np.diff(time) > 0)
+--------------------------------
+http://stackoverflow.com/questions/9542738/python-find-in-list
+matches = [x for x in lst if fulfills_some_condition(x)]
+matches = (x for x in lst if x > 6)
+--------------------------------
+Ternary:
+ypts = [ypts[i] if np.logical_not(np.isinf(ypts[i])) else -6 for i in xrange(len(ypts))]
+--------------------------------
+If you want to control the colors that will be cycled through: 
+http://stackoverflow.com/questions/4805048/how-to-get-different-lines-for-different-plots-in-a-single-figure
+
+import matplotlib.pyplot as plt
+import numpy as np
+x = np.arange(10)
+plt.gca().set_color_cycle(['red', 'green', 'blue', 'yellow'])
+plt.plot(x, x)
+plt.plot(x, 2 * x)
+plt.plot(x, 3 * x)
+plt.plot(x, 4 * x)
+plt.legend(['y = x', 'y = 2x', 'y = 3x', 'y = 4x'], loc='upper left')
+.show()
+-----------------------------
+
+sorting one list by another
+http://scienceoss.com/sort-one-list-by-another-list/
+
+http://mbk.ps.uci.edu/python.html
+
+            fp = open('positions.txt','w')
+            for i in  range(len(posx)):
+                fp.write("%f %f %f\n" % (posx[i],posy[i],field[i]))
+            fp.close
+----------------------
+adding to a sequence with iteration
+#def chunker(seq, size):
+#    return (seq[pos:pos + size] for pos in xrange(0, len(seq), size))
+
+-----------------
+asterisks pass dictionaries into args 
+http://www.technovelty.org/python/on-asterisks-in-python.html
+>>> def function(arg1=None, arg2=None):
+     print arg1, arg2
+>>> dict = {"arg1":"1", "arg2":"2"}
+>>> function(**dict)
+1 2
+
+>>> def function(arg, *vargs, **kargs):
+    print arg
+    print vargs
+    print kargs
+>>> function(1, 2,3,4,5, test1="abc", test2="def")
+1
+(2, 3, 4, 5)
+{'test1': 'abc', 'test2': 'def'}
+
+
+>>> def function(arg1, arg2, arg3):
+    print arg1, arg2, arg3
+>>> args = (1,2,3)
+>>> function(*args)
+1 2 3
+-------------
+include operator
+min max and where with index
+min_index, min_value = min(enumerate(values), key=operator.itemgetter(1))
+max_index, max_value = max(enumerate(values), key=operator.itemgetter(1))
+
+
+def min_gt(seq, val):
+    return min([v for v in seq if v &gt; val])
+
+def min_ge(seq, val):
+    return min([v for v in seq if v &gt;= val])
+
+def max_lt(seq, val):
+    return max([v for v in seq if v &lt; val])
+
+def max_le(seq, val):
+    return max([v for v in seq if v &lt;= val])
+
+
+-------------------
+pattern = ("[0-1].[0-9]")
+re_pattern = re.compile(pattern)
+listpattern=[]
+for i in allin:
+    pattern_found = re_pattern.search(i)
+    listpattern.append( pattern_found.group() )
+
+-------------------
+
+yt list of fields
+print pf.field_list
+print pf.derived_field_list
+
+---------------
+# sort on a particular list
+def sort_on_x(x, y):
+    return (list(t) for t in zip(*sorted(zip(x, y))))
+nc = df['day'].value_counts()
+x, y = sortonx(nc.index,nc.values)

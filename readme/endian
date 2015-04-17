@@ -1,0 +1,79 @@
+ Endian
+
+
+look at byte ordering:
+od -t x4 file
+
+export F_UFMTENDIAN="big;little:21,22,23"
+http://www.ae.utexas.edu/lrc/fortran/intel/f_ug1/cmp_endi.htm
+
+
+
+
+
+Endianness is a problem when a binary file created on a computer is read on another computer with different endian. Some compilers have built-in facilities to deal with data written in other endians, for example the Intel Fortran compiler supports the non-standard CONVERT specifier, so a file can be opened as OPEN(unit,CONVERT='BIG_ENDIAN',...)
+
+or OPEN(unit,CONVERT='LITTLE_ENDIAN',...)
+endianndevilla.free.fr/endianhttp://www.atmos.washington.edu/~salathe/osx_unix/endian.html
+
+subroutine endian(litend)
+
+c checks if this is a little endian machine
+c returns litend=.true. if it is, litend=.false. if not
+
+integer*1 j(2)
+integer*2 i
+equivalence (i,j)
+logical litend
+
+i = 1
+if (j(1).eq.1) then
+litend = .true.
+else
+litend = .false.
+end if
+
+end
+
+subroutine byteswapi2(k)
+
+c does a byteswap on integer2 number
+
+integer*1 ii(2), jj(2)
+integer*2 i, j, k
+equivalence (i,ii)
+equivalence (j,jj)
+
+i = k
+
+jj(1) = ii(2)
+jj(2) = ii(1)
+
+k = j
+
+end
+
+
+subroutine byteswapr4(r)
+
+c does a byteswap on real*4 number
+
+integer*1 ii(4), jj(4)
+real*4 r, s, t
+equivalence (s,ii)
+equivalence (t,jj)
+
+s = r
+
+jj(1) = ii(4)
+jj(2) = ii(3)
+jj(3) = ii(2)
+jj(4) = ii(1)
+
+r = t
+
+end
+
+no way to convert or byteswap with f77 or g77 as in ifort or pgf77:
+open(unit=10,form='unformatted',status='old',file=infile,convert='BIG_ENDIAN')
+use c files in p3d or ~/cool which read files and reorder bytes.

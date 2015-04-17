@@ -1,0 +1,14 @@
+
+/*     float **all_slices; */
+
+    /* dynamically allocated 2D array*/
+/*     all_slices = cart_alloc(float *, nvars); */
+/*     for(ivar=0; ivar<nvars; ivar++){ */
+/*      all_slices[ivar] = cart_alloc(float, nsgrid*nsgrid); */
+/*     } */
+
+
+/*     for (i = 0; i < nvars; i++) { */
+/*      cart_free(all_slices[i]); */
+/*     } */
+/*     cart_free(all_slices); */

@@ -1,0 +1,86 @@
+EMACS
+
+copy .emacs and .emacs.d/
+copy .viper
+set alias for vi
+
+===================
+command line shortcuts:
+* ctrl-a beginning of line  * ctrl-e end
+* ctrl-k delete rest of line * ctrl-u cut line * ctrl-y paste
+comment:
+C-space = begins mark of region
+C-c c = comment region
+
+
+C-x ( : start recording keyboard macro
+C-x ) : stop recording keyboard macro
+C-x e : replay current keyboard macro
+
+
+to load viper alt-x vi
+on macs use shift apple
+
+emacs -nw blah.c to open in the same xterm
+
+
+this is a vi command really but hey:
+Markers
+Named markers may be set on any line in a file. Any lower case letter may be a
+marker name. Markers may also be used as limits for ranges.
+mc Set marker c on this line
+`c Go to beginning of marker c line.
+'c Go to first non-blank character of marker c line
+
+J joins lines
+
+
+Thanks for your response. I've trimmed down my .emacs/.viper files to
+the minimim that I think I need to get viper working. So they look like:
+
+~/.emacs:
+;; load viper
+(setq viper-mode t)
+(require 'viper)
+
+~/.viper:
+(setq viper-inhibit-startup-message 't)
+(setq viper-expert-level '3)
+
+c-c c-s = idl shell
+c-x c-s = save
+alt-x = options =M-x
+shift-apple-x = options = M-x
+in order not to get the common blocks extended error you need to restart idl
+
+
+C-x r m set a bookmark at current cursor pos
+C-x r b jump to bookmark
+M-x bookmark-rename says it
+M-x bookmark-delete "
+M-x bookmark-save "
+C-x r l list bookmarks
+
+d mark bookmark for deletion
+r rename bookmark
+s save all listed bookmarks
+f show bookmark the cursor is over
+m mark bookmarks to be shown in multiple window
+v show marked bookmarks (or the one the cursor is over)
+
+==
+
+t toggle listing of the corresponding paths
+w " path to this file
+x delete marked bookmarks
+Del ?
+q quit bookmark list
+
+
+M-x bookmark-write write all bookmarks in given file
+M-x bookmark-load load bookmark from given file
+
+(setq tex-dvi-view-command "xdvi")
+ C-c C-f and C-c C-v. The first shortcut calls latex to compile your tex file and the latter call the xdvi to display the generated dvi file. Note that emacs use its own temporary files and you will have to compile your tex file outside of emacs to get a real dvi file.
+
+

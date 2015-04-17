@@ -1,0 +1,102 @@
+
+details:
+Make.config : 
+models/form_star now compiles with sf_recipe
+onestarfits compiles with feedback
+rand.c:
+new random integer and random unit vector direction (for runaways and kicks)
+particle.c: 
+tiny changes for debugging
+starformation.c
+moved several parameters out of starformation
+moved imf into starformation
+blastwave inited in create_star_particle
+added STARII and FAST_GROWTH particle types
+starformation_feedback.c
+imf config moved to starformation
+feedback time ceiling (don't accelerate flows to very high velocities)
+stellar feedback cell added with hook to sf/feedback.stuff.c
+destroy particle added with a hook (CAN BE DELETED? call hook directly from stardestruction_step.c)
+starformation_recipe 
+now contains indicators for old recipe, or continuous star formaiton
+form_star_particles added as a hook
+cell_feedback_step :
+calls back to starformation_feedback.c where hook is used to get to sf/*
+** why not call hook directly rather than calling back to core/?**
+stardestruction_step.c
+call particle delete hook. If particle deleted adjust the loop (this could be done in the feedback hook) 
+starformation_step.c
+now collects sfr and cells, calls a form_star_particles hook.
+step.c
+cell_feedback and star_destruction calls added 
+
+feedback.....
+irtrapping : Andrey's trapping model based on matching clump and cluster mass functions (see agertz paper for parameters)
+kinetic : distributes momentum to surrounding cells
+GetCubeStencil finds 26neighbors at the same level
+cart_rand_unit_vector_block/oct: returns kick unit vector for oct children: either based on direction or on ichild.
+distribute_momentum....
+kfb_pressurize_cell fills extra_pressure source ; 
+kfb_pressurize decides how to spread pressure
+kinetic_to_internal : when adding velocity, if kicks cancel then dissipate 2*momentum^2/2m to energy (turbulence or thermal)
+kfb_kick_cell --  add momentum to cell; kfb_kick -- decide how spread
+kfb_kick_oct == oct kicks (produces grid effects) ,kfb_kick_cube ==27 cell kicks
+cube kicks can be done with constant v (constv)  in all cells or equal momentum (problematic for low mass cells)
+note kicks only kick cells at the same level or one below
+hybrid pressurizes central cell and kicks surroundings
+ml
+added a putback_stellar_mass function (used for deleting virtual "starII" particles).
+rapSR
+calculates L_UV/c*(1-exp(tau_uv))
+** uses a fit to sb99, but could instead use sf_feedback->rt_source **
+snII
+kinetic feedback added based on typical kinetic energy and ejecta mass
+winds
+add stellar wind momentum 
+
+feedback.starII: all of the above is done, but now for individual stars based on onestarfits.c
+rad, rapSR, snII, winds
+fits and checks can be found at: http://www.astro.umd.edu/~sleitner/onestarfits/
+
+form_star....: 
+methods: "all" calls all (2) config_init, config_verify, setup,star_form_particles 
+continuous: stellar mass is added continuously.  dmstar goes to 
+the lowest velocity cluster already in the cell
+a new seed cluster (if the SFR is high enough)
+and a fraction can be used to form starII virtual particles (m>8Msun individual stars) 
+these can be given kicks in which case they are starII-runaways.
+poissonRF12: Robert's rewrite of the cart star formation method.
+poisson with the average converging to some timescale and the variance dictated by the ... Robert should write up some documentation for it.
+form_star.continuous support
+starII -- randomly sample dmstar mass using a power-law imf with some high mass slope
+runaway -- calculates velocities for runaways 
+stargrowth -- used to add mass to "clusters" 
+
+====================
+
+
+Extra energy variables: These variables get added to the pressure and total energy in the Riemann solver and their gammas contribute to the total gamma_effective. They are advected with the internal energy and lose energy through adiabatic expansion (Pdv), but they are different from thermal internal energy in that kinetic energy only dissipates to thermal energy in shocks.  
+
+They each have their own source and sink functions. 
+Turbulent energy, currently comes from two sources (1) supernovae explosions, and (2) from whatever subgrid source supplies the pressure floor. It dissipates by decaying exponentially, either on a fixed timescale or on the cell crossing time. Dissipating turbulent energy is converted to thermal energy.  
+
+To make these changes as un-intrusive as possible I added an updated compute_hydro_fluxes separated from the old one by flags. The altered compute_hydro_fluxes is equivalent to the old one when the extra energy variables are not defined, but it has been re-written to be more compact. After enough use/testing, and confirmation that it is as efficient, I think it should replace the old, expanded version.  
+
+
+* a module to **read particle based (Galform) ICs**
+
+
+
+## Other (potentially controversial) modifications
+ * hydro_eos now occurs before the hydro solver at the beginning of the timestep. This ensures that pressure, internal energy and total energy variables are all synced before the first sweep  (these should be consistent either always or never).  
+
+ * jobname in cfg is **not** overwritten by jobname read from *.art file anymore.
+
+## Improvements 
+'''refinement on 1st species particle''' number and related gas mass
+See r1423:
+To refine on particles relative to the 1st specie particle use DARK_1STSPEC_INDICATOR. 
+Then all refinement weights for particles scale by the (mass of the first species particle). 
+To refine on gas relative to the 1st specie particle use GAS_1STSPEC_INDICATOR.
+Then all refinement weights for gas scale by OmegaB/Omega0 x (mass of the first species particle).
+

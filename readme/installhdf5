@@ -1,0 +1,15 @@
+
+http://www.hdfgroup.org/ftp/HDF5/current/src/unpacked/release_docs/INSTALL
+2. Quick installation
+        For those who don't like to read ;-) the following steps can be used
+        to configure, build, test, and install the HDF5 Library, header files,
+        and support programs. For example, to install HDF5 version X.Y.Z at
+        location /usr/local/hdf5, use the following steps.
+
+            $ gunzip < hdf5-X.Y.Z.tar.gz | tar xf -
+            $ cd hdf5-X.Y.Z
+            $ ./configure --prefix=/usr/local/hdf5 <more configure_flags>
+            $ make
+            $ make check                # run test suite.
+            $ make install
+            $ make check-install        # verify installation.

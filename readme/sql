@@ -1,0 +1,17 @@
+SELECT * [count(DISTINCT month)] [DISTINCT] 
+FROM T1 
+JOIN T2
+ON  WHERE T1.id=T2.id
+WHERE T1.weight=100
+GROUP BY [something in the select]
+HAVING 
+ORDER BY X [ASC/DESC]
+
+CASE creates a new column with rows according to values in another column.
+SELECT player_name,
+       year,
+       CASE WHEN year = 'SR' THEN 'yes'
+            WHEN year='JR' THEN 'junior'
+            ELSE 'no' END AS is_a_senior
+  FROM benn.college_football_players
+  

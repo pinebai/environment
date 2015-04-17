@@ -1,0 +1,82 @@
+Compiler flags
+
+
+Compiler flags
+- can cause problems including segmentation faults and bad reading because Endianness might need to be swapped (byteswapio)
+-pgf77:
+
+
+	 -mp 
+	       openmp
+	      -Mbyteswapio
+          Swap bytes from big-endian to little-endian or vice
+          versa on input/output of unformatted Fortran data. Use
+          of this option enables reading/writing of Fortran
+          unformatted data files compatible with those produced
+          on Sun or SGI systems.     
+     -Mpreprocess
+          Run the preprocessor on Fortran or assembler source
+          files.  By default, the preprocessor is run when the
+          source's suffix is .fpp, .F, .F90, .F95, or .HPF.
+     -mcmodel=small|medium
+          (AMD64 and IA32/EM64T only) Use the memory model that
+          limits objects to less than 2GB (small) or allows data
+          sections to be larger than 2GB (medium); implies
+          -Mlarge_arrays
+ 	  -fastsse
+          Chooses generally optimal flags for a processor that
+          supports SSE instructions (Pentium 3/4, AthlonXP/MP,
+          Opteron) and SSE2 (Pentium 4, Opteron).  Use pgf77
+          -fastsse -help to see the equivalent switches.
+     -tp amd64
+     	     Specify the type of the target processor other options available;
+	         AMD Opteron or Athlon-64 in 64-bit mode
+     -Msmart -Mnosmart (default)
+          Enable (disable) optional AMD64-specific post-pass
+          instruction scheduling.
+     -Mnontemporal
+          Allow nontemporal move prefetching. -Mnontemporal used
+          with -fastsse can sometimes be faster than -fastsse
+          alone.
+ 	  -Mrecursive -Mnorecursive (default)
+          Allocate (don't allocate) local variables on the stack,
+          thus allowing recursion. SAVEd, data-initialized, or
+          namelist members are always allocated statically,
+          regardless of the setting of this switch.
+     -Mvect[=option[,option,...]] -Mnovect (default)
+          Pass options to the internal vectorizer. This also sets
+          the optimization level to a minimum of 2; see -O.  If
+          no option list is specified, then the following vector
+          optimizations are used:  assoc,cachesize:c,nosse, where
+          c is the actual cache size of the machine.  The -Mvect
+          options are:
+          assoc (default) noassoc
+                    Enable (disable) certain associativity
+                    conversions that can change the results of a
+                    computation due to floating point roundoff
+                    error differences.  A typical optimization is
+                    to change the order of additions, which is
+                    mathematically correct, but can be
+                    computationally different, due to roundoff
+                    error.
+          cachesize:number (default=automatic)
+                    Instructs the vectorizer, when performing
+                    cache tiling optimizations, to assume a cache
+                    size of number.
+          sse nosse (default)
+                    Use (don't use) SSE, SSE2, 3Dnow, and
+                    prefetch instructions in loops where
+                    possible.
+
+intel fortran compiler (ifc/ifort) flags
+-fpp : fortran preprocessor used on file.
+-convert big_endian / -convert little_endian
+This is better than specifying byteswapping,because it is (if set) platform-independent.
+-assume byterecl ... assume byte reading.
+-openmp - sometimes causes segmentation faults(?)
+-w no warnings
+-mcmodel medium  allows larger arrays
+-i_dynamic will also help large arrays compile   <- relocation truncated to fit: R_X86_64_PC32 .bss
+
+
+Fortran: for gfortran, use the compiler flag -ffpe-trap=invalid,zero,overflow.

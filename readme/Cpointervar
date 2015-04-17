@@ -1,0 +1,24 @@
+int* p makes p a pointer to an integer address; 
+* dereferences an address to get its value
+so int* p = &i means the pointer p is pointing to address of i
+the value of i is the dereferenced pointer; that value is *p 
+
+http://stackoverflow.com/questions/4955198/what-does-dereferencing-a-pointer-mean
+
+increment n and return it
+
+#include <stdio.h>
+void foo(int* n)
+{
+    (*n)++;
+}
+int main()
+{
+    int n = 0;
+    int i;
+    for(i = 0; i < 5; i++)
+    {
+        foo(&n);
+        printf("%d\n", n);
+    }
+}

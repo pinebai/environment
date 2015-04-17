@@ -1,0 +1,9 @@
+
+logarithmic slopes:
+dN/dQ = Q**a
+log(dN/dQ) = a log(Q) ( log-log, power law slope of a)
+dN/dlogQ = Q*dN/dQ = Q*Q**a = Q**(a+1)
+
+Also note that 
+d(N*Q)/dlogQ = Q**(a+2) , so a slope of 2 would give constant luminosity per logarithmic interval for example.
+

@@ -1,0 +1,79 @@
+made changes to a /local/trunk that I want to make into a new branch ---------
+svn copy http://server/trunk http://server/branches/my-branch
+svn switch /local/trunk http://server/branches/my-branch
+svn commit /local/trunk -m "committing to branch"
+svn switch /local/trunk http://server/trunk
+svn update /local/branches
+
+==================
+want to reverse a merge at 1341
+svn merge -rhead:1340 $svndrudd/branches/turbulence/tests/ ./local/tests/
+
+
+
+==========================
+want to merge changes from /local/trunk into my branch ---------
+go to your branch location
+svn merge -rLastRevisionMergedFromTrunkToBranch:HEAD url/of/trunk 
+===============================
+I always have to look up the documentation on how to merge a whole SVN branch to another. Today there were bug fixes to trunk of my project that I wanted to port into my branch. I expected this to be easy since I hadn’t made many changes to my branch, and no changes to the same files that were modified in the trunk.
+
+Using Common Use-Cases as a reference, this is what I did:
+
+From within my branch:
+
+svn log
+This displays the revision number for when my branch was created:
+
+------------------------------------------------------------------------
+r23 | stereosv | 2009-02-17 11:42:28 -0500 (Tue, 17 Feb 2009) | 1 line
+ 
+creating branch for xyz
+Now I need to find out what revision number the trunk is at. Perfoming an “svn update” within the trunk shows me what version it’s at.
+
+> svn update
+At revision 25.
+In my case the trunk is at revision 25… implying there were only two commits since the time I checked out my branch. Nice.
+
+Now, it’s time to carry merge these changes into my branch. Back in my branch directory, it’s time to put these revision numbers to good use.
+
+svn merge -r 23:25 $svndrudd/trunk/
+What this does is merge the changes that were made between revision 23 (when I created my branch) and revision 25 (the most recent revision of the trunk) in the trunk into my working copy.
+
+Now, it’s time to check in my branch, with the updated changes from the trunk.
+
+svn ci -m "Merged trunk changes r23:25 into my branch"
+SVN 1.5 has made some improvements to the way merging works.. So check your SVN version with “svn –version” to make sure you are using the right syntax for your version.
+===============================
+
+
+
+
+
+
+
+
+
+
+made changes in your branch between commit at 10 and HEAD that you want to merge into the trunk:
+
+svn commit /local/branches/my-branch -m "all changes"
+svn update /local/trunk
+svn merge -r 10:HEAD http://server/branches/my-branch /local/trunk
+svn commit /local/trunk -m "merged my-branch from r10:15 into trunk"
+=====================================
+
+
+
+
+
+
+merge 2 branches into one:
+svn copy to generate a copy of the trunk
+svnlog to get when they were split from trunk
+svn checkout your copy of the trunk
+svn merge -r1338:rhead $svndrudd/branches/turbulence/ ./
+svn merge -r1337:rhead $svndrudd/branches/starII/ ./
+local version is modified, check changes are what you want...
+
+

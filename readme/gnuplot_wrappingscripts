@@ -1,0 +1,53 @@
+
+Scripting Gnuplot ================================
+
+Run from gnuplot: gnuplot> load "output.plt"
+Run from Terminal: > gnuplot filename.
+Run as Script: >chmod +x output.plt , ./output.plt
+==output.plt==
+#!/usr/bin/gnuplot -persist   #leave plot window on the screen with persist
+plot 'file1'
+pause 1  #wait one second
+plot 'file2'
+pause -1 #wait for return
+
+#if you want to pause at a certain angle press cntrl-z to
+#suspend and then fg to continue
+
+
+histogram
+http://maple.rsvs.ulaval.ca/mediawiki/index.php/Making_density_maps_using_Gnuplot
+
+Wrapping gnuplot in a shell script=======================
+
+Edit filenames
+plotall.plt
+#!/bin/bash
+sed "s/calc1/calc2/g" data.plt | gnuplot
+sed "s/calc1/calc3/g" data.plt | gnuplot
+sed "s/calc1/calc4/g" data.plt | gnuplot
+sed "s/calc1/calc5/g" data.plt | gnuplot
+
+Script Inside Shell
+plotarg.plt
+#!/bin/bash
+echo 'argument required'
+gnuplot << EOF
+set terminal postscript eps color enhanced
+set output "$1.eps"
+set xlabel "Energy [MeV]"
+set ylabel "Cross Section [b]"
+set title "(n,2n) reaction"
+set xrange [ 0 : 20 ]
+set yrange [ 0 : 2 ]
+set mxtics 5
+set mytics 5
+set xtics 5
+set ytics 0.5
+plot "$1.dat" using 1:2 notitle w l
+EOF
+
+./plotarg.plt calc1
+./plotarg.plt calc2
+./plotarg.plt calc3
+./plotarg.plt calc4

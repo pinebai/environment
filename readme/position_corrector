@@ -1,0 +1,3 @@
+
+correction position for box
+#define pcorr(x) ( x >= 0.0 && x<(double)(num_grid) ? x		: ( x < 0.0 ? x + (double)(num_grid) :  ( x >= (double)(num_grid) ? x - (double)(num_grid) : -99 )) )

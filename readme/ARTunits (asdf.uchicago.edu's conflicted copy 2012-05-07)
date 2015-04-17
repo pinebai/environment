@@ -1,0 +1,13 @@
+ngxi = dn/dnu * nu = number density of photons/Hz *nu
+
+direction of neighbors in each dimension
+     for(idir=0;idir<nDim;idir++){
+         left = idir*2;	
+         rght = idir*2+1;
+
+for children start at top left I think
+  
+2 3  6 7
+0 1  4 5
+
+

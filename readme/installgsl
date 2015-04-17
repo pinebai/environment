@@ -1,0 +1,10 @@
+Installing gsl
+make sure all the prefixes are set correctly and then check the "shared libraries, staticically linked compilation". .h files are referred to in the LD_flags library thing in the .bashrc file
+see for example:
+http://www.gnu.org/software/gsl/manual/html_node/Using-the-library.html
+shared libraries and compiling and linking
+
+
+to run the gsl random stuff: gcc a.c -lgsl -lgslcblas -lm
+
+-------------------------------

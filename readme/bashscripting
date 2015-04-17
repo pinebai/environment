@@ -1,0 +1,89 @@
+redicts all stderr from stuff to filename:
+stuff 2> filename
+redirects all output from stuff to filename:
+stuff &> filename 
+
+--------------------------------------------------
+Shell Scripting
+
+* include file in script '. file-to-include'
+
+
+`cat a` (back ticks)
+where file a contains echo "blah"
+prints: blah
+this is how you execut the commands in a file (redirect to stdin)
+
+Sometimes programs have already been told to direct standard error to someplace
+other than the display. But you might wish to see just what the errors are, so
+you want to redirect standard error back to the display where you can see how a
+program is proceeding. To do this, you would type:
+
+$ programname 2>&1
+
+history lists commands
+
+i=2; while true ; do echo "sweet $i"; i=`expr $i + 1`; sleep 1; done
+i=2; while ls >devnull; do echo "sweet $i"; i=`expr $i + 1`; mv 2 $i; sleep 1; done
+
+for (( i=0; i<10; i++ )) ; do echo $i ; done
+
+#!/bin/bash
+for i in $(seq 15)
+do
+echo $i
+done
+
+for file in `ls *.pdf`; do lpr $file; done
+print all lines containing G in the first column (use with du to find Gigabyte size folders/files)
+ awk '$1 ~ /G/ {print $0}' disk_usage
+--------------------------------------------------
+
+
+----------------------------------
+SED 
+>cat file
+I have three dogs and two cats
+>sed -e 's/dog/cat/g' -e 's/cat/elephant/g' file
+I have three elephants and two elephants
+>
+http://pegasus.rutgers.edu/~elflord/unix/sed.html
+
+print line $1 of file:
+sed -n "${1}p" file
+
+
+----------------------------------------------
+
+if [ $# -ne 1 ]; then echo "usage: <file-root-before-period>"; exit; fi
+jobpath="$1"
+jobname=`echo $jobpath | sed 's|/| |g' | awk '{print($NF)}'`
+
+--------------------------------------------------
+skip analysis when output already exists:
+
+onlylast=0
+onlynew=0
+everynth=5
+ if [ "$onlylast" == 1 ];then
+      aexpn="`/bin/ls out_${jobname}/*a0.????*.art|grep -o [0-1].[0-9][0-9][0-9][0-9] |tail -n1`"
+  else
+
+      aexpn="`/bin/ls out_${jobname}/*a0.????*.art|grep -o [0-1].[0-9][0-9][0-9][0-9]`"
+      echo $aexpn
+      if [ $everynth -gt 1 ]; then
+          aexpn=`echo "$aexpn" | awk "0 == (NR + $everynth-1) % $everynth"`
+      fi
+      echo $aexpn
+      exit
+
+      if [ "$onlynew" == 1 ];then
+          aexpn_done="`/bin/ls out_${jobname}/*a0.????*.dat | grep -o [0-1].[0-9][0-9][0-9][0-9]`"
+          for ae in $aexpn_done
+            do
+            aexpn=`echo "$aexpn" | grep -v $ae`
+          done
+      fi
+  fi
+  aexpn=`echo $aexpn | tr '\n' ' '`
+  echo $aexpn

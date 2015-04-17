@@ -1,0 +1,54 @@
+Fixing NAN and INF
+      asdf=sqrt(-asdf) !NAN
+      asdf=1/0.        !INF
+      write(*,*)asdf
+fail!      if(asdf.ne.asdf)write(*,*)'NAN or INF DETECTED'    
+fail!      if(asdf/asdf.ne.1)write(*,*)'NAN or INF DETECTED'
+fail!      if(asdf.ne.asdf)write(*,*)'NAN or INF DETECTED'
+      if(asdf+1.eq.asdf)write(*,*)'NAN or INF DETECTED'
+       stop
+
+
+cat inf.f90 ...............pgf90
+ program test 
+ real a,b 
+ logical isnan 
+ logical isinf 
+
+ b=3 
+ a=0 
+ b=b/a 
+
+ print *, b 
+ if (isnan(b)) then 
+ print *, "Its a NaN" 
+ else if (isinf(b)) then 
+ print *, "Its a Inf" 
+ else 
+ print *, "Its not a NaN or Inf" 
+ end if 
+
+ end 
+
+ logical function isnan(a) 
+ real a 
+ if (a.ne.a) then 
+ isnan = .true. 
+ else 
+ isnan = .false. 
+ end if 
+ return 
+ end 
+
+ logical function isinf(a) 
+ real a 
+
+ if ((a*0).ne.0) then 
+ isinf = .true. 
+ else 
+ isinf = .false. 
+ end if 
+ return 
+ end 
+ % pgf90 -V6.2-3 -Kieee inf.f90 
+ % a.out 

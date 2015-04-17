@@ -1,0 +1,19 @@
+quicktime Place all the images in a folder. Number the photos, starting from 1, in the order you want them to appear in the movie.
+
+in quicktime go to file -> open image sequence
+
+Movies: pngtomov
+for x in `/bin/ls *`; do new=`echo $x | sed 's/\.[0-9][0-9]\./\./g'`; echo mv $x $new ; mv $x $new; done
+for x in `/bin/ls *`; do new=`echo $x | sed 's/\.\([0-9][0-9]\)\./\1./'`; echo mv $x $new ; mv $x $new; done
+
+
+
+
+convert *.gif mov.gif
+(avi,mpeg,mpg)
+imagemagick
+convert -delay 120 -loop 0 pg-s4zm2h796-fid-rs8*.gif movies/mov-s4zm2h796-fid-rs8.wh.gif
+
+
+
+convert -adjoin -colors 255 -layers OptimizePlus -delay 30  run*.png blah.gif

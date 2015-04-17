@@ -1,0 +1,59 @@
+# revert to previous commit 
+http://stackoverflow.com/questions/4114095/revert-to-a-previous-git-commit
+git checkout <revision-number> .
+git commit # commits the patch to the previous revision 
+
+# convert current repo to a branch
+git clone https://github.com/sleitner/fyv.git
+git checkout -b 'oldauth'
+git push origin oldauth
+
+# commit changes to files
+git commit -a
+# add a file for commit
+git add 
+
+
+# unstage last commit and then edit commit message
+git reset --soft HEAD~1
+git commit -c ORIG_HEAD
+
+# https://help.github.com/articles/syncing-a-fork
+upstream is the original repo that you forked 
+> git fetch upstream
+> git merge upstream/master
+origin is your fork: your own repository on github which may be a clone of the original. You generally want to use origin. master refers to your local copy... 
+> git fetch origin
+> git merge origin/master
+OR 
+> git pull origin master  
+
+# clone a respository
+> git clone https://github.com/sleitner/fyv/
+# commit to server
+> git push
+
+# revert : file.md
+> git checkout -- file.md
+# unstage a file:
+> git reset HEAD file.md
+# unstage a file from its first commit:
+> git rm -r --cached 
+
+
+# initialize a new repo:
+> touch README.md
+> git init
+> git add README.md
+> git commit -m "first commit"
+> git remote add origin https://github.com/<sleitner/fyv.git>
+> git push -u origin master
+
+-------
+ignore files in .gitignore
+
+This will tell git you want to start ignoring the changes to the file
+git update-index --assume-unchanged path/to/file
+
+When you want to start keeping track again
+git update-index --no-assume-unchanged path/to/file

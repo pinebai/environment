@@ -1,0 +1,98 @@
+--------------------------------------------------
+GNUPLOT
+
+
+Gnuplot (see fixbb.cray on fulla and gnuscripts in halo/analysis/)
+* set ticslevel 0  == zero z-axis ; set key spacing 0.75
+* every 2 plot every 2 line                              * every ::3 skip the first 3 lines
+* every ::3::5 plot from the 4-th to 6-th lines     * every ::0::0 plot the first line only
+* every 2::::6 plot the 1,3,5,7-th lines            * every :2 plot every 2 data blocks
+* every :::5::8 plot from 5th to 8th data blocks
+
+set term postscript color enhanced "Helvetica" portrait
+set output 'file'
+splot [lx:hx][ly:hy][lz:hz] \
+"< paste col_1-3 col4-n | awk '{if($3>10) print($4,$5)}' " u 2:3:4:(log10($15)) ps .18 pt 5 pal
+=======================
+bar graphs: bargraph.pl -eps bargraph.perf > blah.eps
+some modifications were made to bargraph.pl (marked with snl in order to allow two boxes in the figure in MWML.tex ).
+
+
+
+=======================
+Plot all files in a directory (this is sort a workaround to get rid of the last comma)
+plot `ls -l *|grep asc |awk '{printf("\"%s\" ,",$9) }' | sed 's/,"asc.dat" ,$//'`
+
+=======================
+Interpolating/smoothing in Gnuplot:
+ set table 'conroy09/z0mhmstar.dat'
+plot 'conroy09/z0mhmstar.txt' u 1:2:(5) smooth acsplines lw 1
+OR
+set term tab
+set out 'smoothed.tab'
+plot 'xxxx' u x:y:e smooth acspline  (e=1/y worked well, but generally larger numbers demand closer to data points)
+set out 'interpolated.tab'
+plot 'xxxx' u x:y smooth spline
+or  plot 'xxxx' u x:y smooth bezier
+set term x11
+
+
+to input the commands in a text file into gnuplot just write the text file then
+type gnuplot filename. eg to plot file1 then file2 one after the other write a
+file a with contents
+plot 'file1'
+pause 1
+plot 'file2'
+
+then type: gnuplot a
+while running the code if you want to pause at a certain angle press cntrl-z to
+suspend and then fg to continue
+
+
+other gnuplot commands:
+plot '' using 1:2 w l, and splot ''
+set logscale y (see help logscale)
+
+plot '/home/sleitner/cosmosims/CAMB/z49_matterpower.dat' u 1:($2), 'outpz49s7fit77'
+every ::128::256
+
+to choose which lines to plot from a file or alternate lines in a plot use the
+"every" option when plotting
+.
+every I:J:K:L:M:N
+I Line increment
+J Data block increment
+K The first line
+L The first data block
+M The last line
+N The last data block
+every 2 plot every 2 line
+every ::3 skip the first 3 lines
+every ::3::5 plot from the 4-th to 6-th lines
+every ::0::0 plot the first line only
+every 2::::6 plot the 1,3,5,7-th lines
+every :2 plot every 2 data block
+every :::5::8 plot from 5-th to 8-th data blocks
+
+http://t16web.lanl.gov/Kawano/gnuplot/datafile2-e.html#7.6
+http://t16web.lanl.gov/Kawano/gnuplot/plot6-e.html#5.16
+
+===================================
+set  cbrange [] <--  color range
+
+===================================
+set ticslevel 0    <--- remove space in 3D plots
+
+===================================
+Plot labels at specified positions see gen_label_points.cray in ~/cool/
+#!/bin/bash                                                                                                                                           
+perl -ane 'print "set label \"$F[0]\" font \"Helvetica,8\" at $F[1],$F[2],$F[0]\n"' toft_iso0_rs_0.2-2.0keV_-3-1Z_3e4-1e8K.dat >label.plt
+
+
+The next example is to write a text at the origin of each coodinate.
+gnuplot> set label "(0,0) first" at first 0, first 0 gnuplot> set label "(0,0) graph" at graph 0, graph 0 gnuplot> set label "(0,0) screen" at screen 0, screen 0 
+The "first" label is placed at the center of the graph. The origin of the graph coordinate locates at the left bottom corner. The top right corner is the coordinate (1,1). The location defined in the graph coordinate is relative to the graph size. For example graph 0.5, graph 0.5 is always the center in the graph border. The origin of the "screen" coordinate is the left bottom corner and (1,1) is the top right corner of the screen (paper). This coordinate is not affected by the size of plot.
+
+A label defined in the "first" coordinate moves when the range of X and Y axes are changed, but it does not move if the coordinate is "graph" or "screen"
+
+
