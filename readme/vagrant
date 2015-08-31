@@ -1,0 +1,20 @@
+Vagrant 
+
+vagrant creates the virtual machine (vm) with some OS and some configurations; one element of the vagrant box's configuration is the synced directory that Ansible provisions.
+
+vagrant provision runs the ansible scripts in provisions/ckan/tasks
+ansible consists of playbooks-roles-tasks, with default group_vars all/local overwriting local variables for a given role.
+
+
+# random commands that are useful  (see also aliases in bashrc)
+vagrant provision -- installs the environment
+vagrant reload -- sets up the environment and server
+vagrant ssh -- ssh into the virtual machine
+
+sudo service httpd restart  -- restart apache server (can also try postgresql-9.3 and solr)
+      
+(local computer)  ->port 8080-> {vagrant-box ->port 80-> (apache[ckan/postgresql])}
+If something goes wrong you should be able to curl localhost:80 from inside the vagrant box. If that works, you should be able to access localhost:8080 from your machine, and if not it could be an iptables issue (run chkconfig iptables off).
+
+
+    

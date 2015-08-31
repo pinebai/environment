@@ -1,0 +1,11 @@
+nosetests -s --with-coverage validators.py
+    --with-coverage
+    Enable plugin Coverage: Activate a coverage report using coverage module.
+    -s
+    Don't capture stdout (any stdout output will be printed immediately) 
+    
+
+import mock
+@mock.patch(target)
+    target is a string describing the module where the relevant function lives (is originally imported from).
+    

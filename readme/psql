@@ -1,0 +1,4 @@
+from web server psql to ppas server
+psql -h 10.95.74.143 -U svc_ckan ckan
+
+    

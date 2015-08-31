@@ -1,4 +1,6 @@
-http://django-eztables.readthedocs.org/en/latest/templatetags.html
+
+
+    http://django-eztables.readthedocs.org/en/latest/templatetags.html
 
 
 debugging:
@@ -12,3 +14,9 @@ debugging:
 buttons:
 $('button[name="schoolinfo"].active')
         .filter('[id="charter"]').val()=="charter" ? 0 : 1 ;
+
+
+create editable table with ability to dynamically add columns.
+https://www.datatables.net/forums/discussion/23921/adding-new-column-dynamically-to-the-datatable
+(see last comment)
+http://jsfiddle.net/4nil/zq7j97c4/

@@ -1,27 +1,38 @@
+# create a private branch
+https://24ways.org/2013/keeping-parts-of-your-codebase-private-on-github/
+
+
 # revert to previous commit 
 http://stackoverflow.com/questions/4114095/revert-to-a-previous-git-commit
 git checkout <revision-number> .
-git commit # commits the patch to the previous revision 
+git commit # commits the patch to the previous revision
+    
+http://stackoverflow.com/questions/4114095/revert-to-a-previous-git-commit
 
-# convert current repo to a branch
-git clone https://github.com/sleitner/fyv.git
-git checkout -b 'oldauth'
-git push origin oldauth
+#branch a current repo
+git branch <newbranchname>
+git checkout <newbranchname>
+git push -u origin <newbranchname>
 
 # commit changes to files
 git commit -a
 # add a file for commit
 git add 
 
-
+# revert a particular commit and recommit the changes
+git revert <commit#>
+or git revert -n <commit#> to revert the code, but don't re-commit
+    
 # unstage last commit and then edit commit message
 git reset --soft HEAD~1
 git commit -c ORIG_HEAD
 
 # https://help.github.com/articles/syncing-a-fork
-upstream is the original repo that you forked 
+upstream is the original repo that you forked
 > git fetch upstream
 > git merge upstream/master
+if it doesn't exist
+> git remote add upstream url 
 origin is your fork: your own repository on github which may be a clone of the original. You generally want to use origin. master refers to your local copy... 
 > git fetch origin
 > git merge origin/master

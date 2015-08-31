@@ -1,0 +1,31 @@
+nose tests:
+
+nose collects from unittest.TestCase
+subclass it to create a test class
+
+
+https://docs.python.org/3/library/unittest.mock.html
+https://docs.python.org/3/library/unittest.mock.html?highlight=side_effect#unittest.mock.patch
+mock.patch() -- object is replaced with a mock during the test
+If patch() is used as a decorator and new is omitted, the created mock is passed in as an extra argument to the decorated function.
+
+https://pypi.python.org/pypi/nose-parameterized/
+@parameterized.expand(
+[("a",), ("<script>alert('hi');</script>",), (-.01,), (-1,), (-1000000,), (-9999.9999999,), ]
+)
+@mock.patch("ckanext.cfpb_extrafields.validators.Invalid")
+def test_positive_number_validator_invalid(self, input, mi):
+	mi.side_effect = Exception("")
+	with self.assertRaises(Exception):
+		v.positive_number_validator(input)
+
+@parameterized goes into "input"
+@patch("method")
+side_effect is something that happens when the method runs
+then we assert that the same Exception gets raised by Invalid when the validator is run.
+
+
+
+alias ctest='nosetests -s --with-coverage --cover-package=ckanext.cfpb_extrafields.validators'
+
+

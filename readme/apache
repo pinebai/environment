@@ -1,0 +1,4 @@
+curl -v IP.IP.IP -P XXXX
+
+port 8080 for web
+    5432 for psql
